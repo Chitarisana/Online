@@ -12,13 +12,14 @@
     <color name="disaccumulated">#444b53</color>
     <color name="schedule">#ffae00</color>
     <color name="main">#0c4775</color>
-    <color name="main_background">#fff</color>
-    <color name="title">#fff</color>
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+    <color name="title">@color/white</color>
     <color name="news_list_title">#0000ff</color>
     <color name="news_list_date">#231f20</color>
     <color name="news_list_short">#000</color>
     <color name="divider_news">#f57b20</color>
-    <color name="student_name">#fff</color>
+    <color name="student_name">@color/white</color>
     <color name="student_id">#fbfe02</color>
     <color name="score">#731bcd</color>
     <color name="gradient_start">#054eb5</color>
@@ -116,7 +117,7 @@
     <string name="edit_password_noti_success">Đổi mật khẩu thành công.</string>
     <string name="edit_contact">Sửa thông tin</string>
     <string name="edit_contact_title">Sửa thông tin liên lạc</string>
-    <string name="student_edit_info_success">Sửa thành công.</string>
+    <string name="edit_contact_success">Sửa thành công.</string>
     <!-- <string name="title_activity_private">PrivateActivity</string> -->
 
 </resources>

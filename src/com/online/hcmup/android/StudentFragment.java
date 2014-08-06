@@ -41,31 +41,29 @@ import android.widget.TextView;
 
 public class StudentFragment extends BaseFragment {
 	public static int TYPE;
-	static Session session;
-	static Activity context;
-	static DbHandler db;
-	static ListView list;
-	static LinearLayout list1, list2;
+	Session session;
+	Activity context;
+	DbHandler db;
+	ListView list;
+	LinearLayout list1, list2;
 
-	static Button btnLeft;
-	static Button btnRight;
-	static View rootView;
-	static ImageView avatar;
+	Button btnLeft, btnRight;
+	View rootView;
+	ImageView avatar;
 
-	final static int[] COLORS = new int[] { R.color.info, R.color.course,
+	final int[] COLORS = new int[] { R.color.info, R.color.course,
 			R.color.contact };
-	final static String[] LINKS = new String[] { Link.STUDENT_INFO,
+	final String[] LINKS = new String[] { Link.STUDENT_INFO,
 			Link.STUDENT_COURSE, Link.STUDENT_CONTACT };
-	final static int[] BUTTON_NAMES = new int[] { R.string.key_info_title,
+	final int[] BUTTON_NAMES = new int[] { R.string.key_info_title,
 			R.string.key_course_title, R.string.key_contact_title };
-	final static int[] TITLES = new int[] { R.string.menu_1, R.string.menu_1,
+	final int[] TITLES = new int[] { R.string.menu_1, R.string.menu_1,
 			R.string.key_contact_title };
-	final static int[] LAYOUTS = new int[] { R.layout.frame_student_info,
+	final int[] LAYOUTS = new int[] { R.layout.frame_student_info,
 			R.layout.frame_student_info, R.layout.frame_student_contact };
 
-	public final static String[] TAGS = new String[] {
-			Constant.TAG_STUDENT_INFO, Constant.TAG_STUDENT_COURSE,
-			Constant.TAG_STUDENT_CONTACT };
+	public final String[] TAGS = new String[] { Constant.TAG_STUDENT_INFO,
+			Constant.TAG_STUDENT_COURSE, Constant.TAG_STUDENT_CONTACT };
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -124,7 +122,7 @@ public class StudentFragment extends BaseFragment {
 	/**
 	 * Inflate new frame
 	 */
-	private static void inflateChild(int type) {
+	private void inflateChild(int type) {
 		TYPE = type;
 
 		ViewGroup sub = (ViewGroup) rootView.findViewById(R.id.student_sub);
@@ -194,8 +192,8 @@ public class StudentFragment extends BaseFragment {
 		}, String.format(LINKS[TYPE], session.getStudentID()));
 	}
 
-	private static KeyValueAdapter dataToAdapter(String[] keys,
-			String[] keys_vi, Object data, int layoutId) {
+	private KeyValueAdapter dataToAdapter(String[] keys, String[] keys_vi,
+			Object data, int layoutId) {
 		String[] values = Utils.getValues(data, data.getClass(), keys);
 		List<KeyValuePair> listAdapter = new ArrayList<KeyValuePair>();
 		for (int i = 0; i < keys_vi.length; i++) {
@@ -208,13 +206,13 @@ public class StudentFragment extends BaseFragment {
 			return new KeyValueAdapter(context, listAdapter, layoutId, 0, null);
 	}
 
-	private static void setAdapter(String[] keys, String[] keys_vi,
-			Object data, ListView list) {
+	private void setAdapter(String[] keys, String[] keys_vi, Object data,
+			ListView list) {
 		list.setAdapter(dataToAdapter(keys, keys_vi, data, 0));
 	}
 
-	private static void setAdapter(String[] keys, String[] keys_vi,
-			Object data, LinearLayout list) {
+	private void setAdapter(String[] keys, String[] keys_vi, Object data,
+			LinearLayout list) {
 		KeyValueAdapter adapter = dataToAdapter(keys, keys_vi, data,
 				R.layout.row_key_value_divider);
 		if (list.getChildCount() > 0)
@@ -229,7 +227,7 @@ public class StudentFragment extends BaseFragment {
 	/**
 	 * Load local database to show in list view/linear layout
 	 */
-	private static void loadDb() {
+	private void loadDb() {
 		switch (TYPE) {
 		case 0:
 			StudentInfo info = db.getStudentInfo(session.getStudentID());
@@ -257,7 +255,7 @@ public class StudentFragment extends BaseFragment {
 		}
 	}
 
-	private static void setTable(View rootView, int tvResId, int messId) {
+	private void setTable(View rootView, int tvResId, int messId) {
 		// Set Title of ActionBar
 		context.getActionBar().setTitle(TITLES[TYPE]);
 
@@ -293,7 +291,7 @@ public class StudentFragment extends BaseFragment {
 	 * Setting controls for this fragment, include button, title, list view,
 	 * linear layout...
 	 */
-	private static void setControl() {
+	private void setControl() {
 		loadImage();
 		switch (TYPE) {
 		case 0:
@@ -313,7 +311,7 @@ public class StudentFragment extends BaseFragment {
 		}
 	}
 
-	private static void loadImage() {
+	private void loadImage() {
 		Bitmap bitmap = Utils.getBitmapImage(context);
 		if (bitmap != null)
 			avatar.setImageBitmap(bitmap);

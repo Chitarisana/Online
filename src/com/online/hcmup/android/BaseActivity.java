@@ -8,10 +8,8 @@ import utils.Session;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.inputmethod.InputMethodManager;
 
 /**
  * @author Khikon
@@ -108,13 +106,5 @@ public class BaseActivity extends Activity {
 		}
 		dialogs[position].setShowing(true);
 		return dialog;
-	}
-
-	protected void hideKeyboard() {
-		InputMethodManager img = ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE));
-		if (getCurrentFocus() != null) {
-			img.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-			//img.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-		}
 	}
 }

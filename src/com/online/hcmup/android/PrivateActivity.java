@@ -43,7 +43,7 @@ public class PrivateActivity extends BaseActivity {
 
 		// add slider bar
 		mainTitle = getString(R.string.app_name);
-		mainLayout = (DrawerLayout) findViewById(R.id.mainLayout);
+		mainLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		ListView menuLV = (ListView) findViewById(R.id.menu);
 
 		String[] menuArray = getResources().getStringArray(R.array.menu_array);

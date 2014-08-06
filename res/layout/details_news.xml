@@ -2,28 +2,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/s10" >
+    android:padding="@dimen/bounder_padding" >
 
     <TextView
         android:id="@+id/title"
+        style="@style/TextView.TextStyle.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:background="#aaa"
+        android:background="@color/info"
         android:paddingBottom="@dimen/s10"
         android:paddingLeft="@dimen/s15"
         android:paddingRight="@dimen/s15"
-        android:paddingTop="@dimen/s10"
-        android:textColor="#fff"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:typeface="serif" >
-    </TextView>
+        android:paddingTop="@dimen/s10" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff" >
+        android:background="@color/white" >
 
         <TextView
             android:id="@+id/content"

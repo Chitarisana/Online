@@ -35,7 +35,7 @@ public class ApiCall extends AsyncTask<URL, Integer, Long> {
 		// Cancel request if there is no network connection while loading
 		if (!ApiConnect.isConnectingToInternet(context)) {
 			cancel(true);
-			callback.onFailure(ICallback.CONNECTION_ERROR, null);
+			callback.onFailure(Errors.CONNECTION_ERROR, null);
 			return;
 		}
 		timestamp = System.currentTimeMillis();
@@ -75,7 +75,7 @@ public class ApiCall extends AsyncTask<URL, Integer, Long> {
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
-				//Utils.showConnectionError(context);
+				// Utils.showConnectionError(context);
 				e.printStackTrace();
 			}
 			// If cancel() is called, leave the loop early
@@ -91,8 +91,8 @@ public class ApiCall extends AsyncTask<URL, Integer, Long> {
 
 	@Override
 	protected void onProgressUpdate(Integer... progress) {
-		if(dialog!=null)
-		dialog.setProgress(progress[0]);
+		if (dialog != null)
+			dialog.setProgress(progress[0]);
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class ApiCall extends AsyncTask<URL, Integer, Long> {
 				JSONObject obj = new JSONObject(jsonString);
 				int stt = obj.getInt(Key.KEY_STATUS);
 				if (stt != 1) {
-					callback.onFailure(ICallback.DATA_ERROR,
+					callback.onFailure(Errors.DATA_ERROR,
 							obj.getString(Key.KEY_ERRORS));
 					continue;
 				}
@@ -139,13 +139,13 @@ public class ApiCall extends AsyncTask<URL, Integer, Long> {
 						callback.onSuccess(data, false);
 					} catch (JSONException e1) {
 						e1.printStackTrace();
-						callback.onFailure(ICallback.JSON_ERROR,
+						callback.onFailure(Errors.JSON_ERROR,
 								obj.getString(Key.KEY_DATA));
 					}
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
-				callback.onFailure(ICallback.JSON_ERROR, results.toString());
+				callback.onFailure(Errors.JSON_ERROR, results.toString());
 			}
 		}
 	}

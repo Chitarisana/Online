@@ -7,10 +7,10 @@
 
             <gradient
                 android:angle="360"
-                android:centerColor="@color/main_background"
+                android:centerColor="@color/white"
                 android:centerX="0.985"
                 android:endColor="@color/info"
-                android:startColor="@color/main_background" />
+                android:startColor="@color/white" />
 
             <corners android:radius="@dimen/s3" />
         </shape>
@@ -19,7 +19,7 @@
     <!-- Background -->
     <item>
         <shape>
-            <solid android:color="@color/main_background" />
+            <solid android:color="@color/white" />
 
             <corners android:radius="@dimen/s3" />
         </shape>

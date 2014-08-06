@@ -14,6 +14,7 @@ import model.utils.KeyValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
@@ -25,6 +26,10 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
 import android.text.util.Linkify;
+import android.view.Gravity;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -129,6 +134,11 @@ public class Utils {
 				.show();
 	}
 
+	public static void showError(Context context, int errorID) {
+		Toast.makeText(context, Errors.getError(errorID), Toast.LENGTH_SHORT)
+				.show();
+	}
+
 	public static void showToast(Context context, String message) {
 		Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 	}
@@ -175,6 +185,23 @@ public class Utils {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+
+	public static void setMaxWidth(LinearLayout layout) {
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+				Constant.MAX_WIDTH, LayoutParams.MATCH_PARENT);
+		params.gravity = Gravity.CENTER;
+		layout.setLayoutParams(params);
+	}
+
+	public static void hideKeyboard(Activity context) {
+		InputMethodManager img = ((InputMethodManager) context
+				.getSystemService(Context.INPUT_METHOD_SERVICE));
+		if (context.getCurrentFocus() != null) {
+			img.hideSoftInputFromWindow(context.getCurrentFocus()
+					.getWindowToken(), 0);
+			// img.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 		}
 	}
 }

@@ -26,7 +26,7 @@
             android:layout_width="0sp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:background="@color/main_background" />
+            android:background="@color/white" />
     </LinearLayout>
 
     <RelativeLayout

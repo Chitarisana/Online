@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -24,17 +25,21 @@ public class EditPasswordFragment extends BaseFragment {
 	Activity context;
 	Session session;
 	EditText oldPass, newPass, reNewPass;
+	LinearLayout mainLayout;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+
 		context = getActivity();
 		session = Session.getInstance(context);
 		session.checkLogin();
 		setOnFragment(R.string.change_password_title);
 
-		View view = inflater.inflate(R.layout.fragment_change_password,
+		View view = inflater.inflate(R.layout.fragment_edit_password,
 				container, false);
+		mainLayout = (LinearLayout) view.findViewById(R.id.main_layout);
+		Utils.setMaxWidth(mainLayout);
 
 		oldPass = (EditText) view.findViewById(R.id.txt_old);
 		newPass = (EditText) view.findViewById(R.id.txt_new);
@@ -66,7 +71,7 @@ public class EditPasswordFragment extends BaseFragment {
 
 			@Override
 			public void onClick(View arg0) {
-				context.onBackPressed();
+				onBackPressed();
 			}
 		});
 		return view;
@@ -74,8 +79,8 @@ public class EditPasswordFragment extends BaseFragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.menu_null, menu);
-		super.onCreateOptionsMenu(menu, inflater);
+		if (menu.hasVisibleItems())
+			menu.clear();
 	}
 
 	private void actionEdit() {
@@ -94,9 +99,10 @@ public class EditPasswordFragment extends BaseFragment {
 					public void onSuccess(Object json, boolean isArray) {
 						Utils.showToast(context,
 								R.string.edit_password_noti_success);
+						// TODO
 						// edit in session or not???
 						// need edit to make token ==> if needed
-						context.onBackPressed();
+						onBackPressed();
 					}
 
 					@Override
@@ -106,6 +112,11 @@ public class EditPasswordFragment extends BaseFragment {
 				}, String.format(Link.STUDENT_CHANGE_PASSWORD,
 						session.getStudentID(), getText(oldPass),
 						getText(newPass)));
+	}
+
+	private void onBackPressed() {
+		Utils.hideKeyboard(context);
+		context.onBackPressed();
 	}
 
 	private boolean isEmpty(EditText editText) {

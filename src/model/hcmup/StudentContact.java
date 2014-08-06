@@ -60,4 +60,8 @@ public class StudentContact {
 			return null;
 		}
 	}
+
+	public String[] toArray() {
+		return strs;
+	}
 }

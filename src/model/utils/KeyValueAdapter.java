@@ -86,8 +86,13 @@ public class KeyValueAdapter extends BaseAdapter {
 			if (percent != 0)
 				maxWidth = (int) (maxWidth * percent);
 		}
-		int padding = rowLayout.getPaddingLeft() + rowLayout.getPaddingRight();
 
+		int padding = 0;
+		if (rowLayout != null) {
+			padding = rowLayout.getPaddingLeft() + rowLayout.getPaddingRight();
+		}
+		padding += key.getPaddingLeft() + key.getPaddingRight()
+				+ value.getPaddingLeft() + value.getPaddingRight();
 		int keyWidth = key.getMeasuredWidth();
 		int valueWidth = value.getMeasuredWidth();
 		int total = maxWidth - padding;

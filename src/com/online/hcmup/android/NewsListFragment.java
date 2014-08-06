@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import utils.ApiConnect;
 import utils.Constant;
+import utils.Errors;
 import utils.ICallback;
 import utils.Link;
 import utils.Session;
@@ -35,7 +36,7 @@ public class NewsListFragment extends BaseFragment {
 	public static int TYPE_PRIVATE = 1;
 	public static String KEY_TITLE = "TITLE";
 	public static String KEY_CONTENT = "CONTENT";
-	static int TYPE = TYPE_PUBLIC;
+	int TYPE = TYPE_PUBLIC;
 
 	DbHandler db;
 	ListView listView;
@@ -116,7 +117,7 @@ public class NewsListFragment extends BaseFragment {
 	}
 
 	private void onFailureTask(int statusCode, String jsonString) {
-		if (statusCode == ICallback.CONNECTION_ERROR) {
+		if (statusCode == Errors.CONNECTION_ERROR) {
 			Utils.showConnectionError(getActivity());
 		} else {
 			Utils.showToast(getActivity(), jsonString);

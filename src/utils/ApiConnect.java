@@ -7,21 +7,23 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 public class ApiConnect {
 
 	private static boolean isReloadable(Context context, ICallback callback) {
-		Session session=Session.getInstance(context);
+		Session session = Session.getInstance(context);
 		int oldOrient = session.getOrientation();
 		int currentOrient = context.getResources().getConfiguration().orientation;
 		session.setOrientation(currentOrient);
+		Log.d("Orientation",oldOrient+"==>"+currentOrient);
 		
 		if (currentOrient != oldOrient
-				&& oldOrient != Configuration.ORIENTATION_UNDEFINED) {			
-			callback.onFailure(ICallback.DISABLE_RELOAD, null);
+				&& oldOrient != Configuration.ORIENTATION_UNDEFINED) {
+			callback.onFailure(Errors.DISABLE_RELOAD, null);
 			return false;
 		} else if (!isConnectingToInternet(context)) {
-			callback.onFailure(ICallback.CONNECTION_ERROR, null);
+			callback.onFailure(Errors.CONNECTION_ERROR, null);
 			return false;
 		}
 		return true;

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -25,6 +26,7 @@ public class LoginActivity extends BaseActivity {
 	DbHandler db;
 	Button btnLogin;
 	TextView forgot;
+	LinearLayout mainLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,9 @@ public class LoginActivity extends BaseActivity {
 		setContentView(R.layout.activity_login);
 		context = this;
 		db = DbHandler.getInstance(context);
+		mainLayout = (LinearLayout) findViewById(R.id.main_layout);
+		Utils.setMaxWidth(mainLayout);
+
 		txtUsername = (EditText) findViewById(R.id.txtUsername);
 		txtPassword = (EditText) findViewById(R.id.txtPassword);
 
@@ -67,7 +72,7 @@ public class LoginActivity extends BaseActivity {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		hideKeyboard();
+		Utils.hideKeyboard(this);
 	}
 
 	@Override
@@ -113,7 +118,7 @@ public class LoginActivity extends BaseActivity {
 		}
 		txtUsername.setText("");
 		txtPassword.setText("");
-		hideKeyboard();
+		Utils.hideKeyboard(this);
 	}
 
 	public void initDb() {

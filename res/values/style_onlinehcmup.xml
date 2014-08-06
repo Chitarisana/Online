@@ -68,7 +68,7 @@
     </style>
 
     <style name="TextView.TextStyle.SliderMenu">
-        <item name="android:background">@color/main_background</item>
+        <item name="android:background">@color/white</item>
         <item name="android:drawablePadding">2sp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingLeft">2sp</item>
