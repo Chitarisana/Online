@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Colors -->
+    <color name="info">#aaaaaa</color>
+    <color name="info_left">#676767</color>
+    <color name="info_right">@color/main</color>
+    <color name="course">#027fff</color>
+    <color name="contact">#C40203</color>
+    <color name="hover">#45a0f4</color>
+    <color name="registered">#ebd229</color>
+    <color name="disaccumulated">#444b53</color>
+    <color name="schedule">#ffae00</color>
+    <color name="main">#0c4775</color>
+    <color name="main_background">#fff</color>
+    <color name="title">#fff</color>
+    <color name="news_list_title">#0000ff</color>
+    <color name="news_list_date">#231f20</color>
+    <color name="news_list_short">#000</color>
+    <color name="divider_news">#f57b20</color>
+    <color name="student_name">#fff</color>
+    <color name="student_id">#fbfe02</color>
+    <color name="score">#731bcd</color>
+    <color name="gradient_start">#054eb5</color>
+    <color name="gradient_end">#9ac8ff</color>
+    <color name="menu_divider">#d5d5d5</color>
+
+    <string name="app_name">Online Mobile HCMUP</string>
+    <string name="app_title">Hệ thống online trường ĐH Sư phạm TPHCM</string>
+    <string name="setting">Thiết lập</string>
+    <!-- Menu -->
+    <string name="description">""</string>
+    <string name="action_login">Đăng nhập</string>
+    <string name="menu_main">Trang chủ</string>
+    <string name="menu_0">Trang của bạn</string>
+    <string name="menu_1">Thông tin cá nhân</string>
+    <string name="menu_2">Chương trình đào tạo</string>
+    <string name="menu_3">Đăng ký học phần</string>
+    <string name="menu_4">Thời khóa biểu</string>
+    <string name="menu_5">Lịch thi</string>
+    <string name="menu_6">Xem điểm</string>
+    <string name="menu_6_1">Xem điểm tích lũy</string>
+    <string name="menu_7">Tài khoản sinh viên</string>
+    <string name="menu_8">Đăng ký xét tốt nghiệp</string>
+    <string name="menu_9">Thoát</string>
+
+    <string-array name="menu_array">
+        <item>@string/menu_0</item>
+        <item>@string/menu_1</item>
+        <item>@string/menu_2</item>
+        <item>@string/menu_3</item>
+        <item>@string/menu_4</item>
+        <item>@string/menu_5</item>
+        <item>@string/menu_6</item>
+        <item>@string/menu_7</item>
+        <item>@string/menu_8</item>
+        <item>@string/menu_9</item>
+    </string-array>
+    <string-array name="menu_icon">
+        <item>@drawable/ic_menu_0</item>
+        <item>@drawable/ic_menu_1</item>
+        <item>@drawable/ic_menu_2</item>
+        <item>@drawable/ic_menu_3</item>
+        <item>@drawable/ic_menu_4</item>
+        <item>@drawable/ic_menu_5</item>
+        <item>@drawable/ic_menu_6</item>
+        <item>@drawable/ic_menu_7</item>
+        <item>@drawable/ic_menu_8</item>
+        <item>@drawable/ic_menu_9</item>
+    </string-array>
+    <!-- Key Student Info -->
+    <string name="key_info_title">Thông tin sinh viên</string>
+    <!-- Key Student Course -->
+    <string name="key_course_title">Thông tin khóa học</string>
+    <!-- Key Student Contact -->
+    <string name="key_contact_1_title">Thông tin liên lạc của sinh viên</string>
+    <string name="key_contact_2_title">Thông tin liên lạc người thân của sinh viên</string>
+    <string name="key_contact_3_title">Số điện thoại nhận tin nhắn</string>
+    <string name="key_contact_title">Thông tin liên lạc</string>
+
+    <!-- Notification String -->
+    <string name="error_server">Không thể kết nối đến server!</string>
+    <string name="error_connect">Kiểm tra kết nối internet.</string>
+    <string name="notification">Thông báo</string>
+    <string name="noti_loading">Đang tải dữ liệu..</string>
+    <string name="public_news_details">Thông báo</string>
+    <string name="private_news_details">Tin nhắn</string>
+    <string name="login_username">Tên đăng nhập</string>
+    <string name="login_password">Mật khẩu</string>
+    <string name="forgot_password"><u>Quên mật khẩu</u></string>
+    <string name="next">Tiếp theo</string>
+    <string name="login">Đăng nhập</string>
+    <string name="login_success">Đăng nhập thành công</string>
+    <string name="login_fail_noti_title">Đăng nhập thất bại..</string>
+    <string name="login_fail_noti_detail1">Mật khẩu truy cập không chính xác.</string>
+    <string name="login_fail_noti_detail2">Tên đăng nhập không tồn tại.</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="exit_noti_title"></string>
+    <string name="exit_noti_detail">Thoát khỏi ứng dụng?</string>
+    <string name="exit_noti_negative">Quay lại</string>
+    <string name="exit_noti_positive">Đồng ý</string>
+    <string name="ok">OK</string>
+    <string name="contact" formatted="false"><![CDATA[Liên hệ phòng CNTT, <font color="#00d93d">phòng C.504, Lầu 5</font>, 280 An Dương Vương, P4, Q5,<br /> để khôi phục mật khẩu.]]></string>
+    <string name="about_us">Thông tin</string>
+    <string name="about_us_details" formatted="false"><![CDATA[Ứng dụng .. quản lý đào tạo tín chỉ trên di động.<br/>]]></string>
+    <string name="edit_pass">Đổi mật khẩu</string>
+    <string name="old_pass">Mật khẩu cũ</string>
+    <string name="new_pass">Mật khẩu mới</string>
+    <string name="renew_pass">Nhập lại mật khẩu mới</string>
+    <string name="btn_confirm">Đồng ý</string>
+    <string name="btn_cancel">Hủy bỏ</string>
+    <string name="change_password_title">@string/edit_pass</string>
+    <string name="edit_password_noti_null">Mật khẩu không được để trống.</string>
+    <string name="edit_password_noti_wrong_old">Mật khẩu cũ không đúng.</string>
+    <string name="edit_password_noti_dismatch">Mật khẩu mới và mật khẩu nhập lại không trùng.</string>
+    <string name="edit_password_noti_success">Đổi mật khẩu thành công.</string>
+    <string name="edit_contact">Sửa thông tin</string>
+    <string name="edit_contact_title">Sửa thông tin liên lạc</string>
+    <string name="student_edit_info_success">Sửa thành công.</string>
+    <!-- <string name="title_activity_private">PrivateActivity</string> -->
+
+</resources>

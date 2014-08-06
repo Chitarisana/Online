@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/edit_pass"
+        android:showAsAction="always|withText"
+        android:title="@string/edit_pass"/>
+    <item
+        android:id="@+id/edit_contact"
+        android:showAsAction="ifRoom"
+        android:title="@string/edit_contact"/>
+
+</menu>
