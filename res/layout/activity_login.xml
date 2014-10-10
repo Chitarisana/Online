@@ -46,29 +46,13 @@
 
             <EditText
                 android:id="@+id/txtUsername"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/s5"
-                android:gravity="fill_horizontal"
-                android:hint="@string/login_username"
-                android:imeActionLabel="@string/next"
-                android:imeOptions="actionNext"
-                android:inputType="textVisiblePassword"
-                android:singleLine="true"
-                android:textColor="@color/info" />
+                style="@style/EditText.TextStyle.Login.Username" />
 
             <EditText
                 android:id="@+id/txtPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/s5"
-                android:gravity="fill_horizontal"
+                style="@style/EditText.TextStyle.Login.Password.Done"
                 android:hint="@string/login_password"
-                android:imeActionLabel="@string/login"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword"
-                android:singleLine="true"
-                android:textColor="@color/info" />
+                android:imeActionLabel="@string/login" />
 
             <Button
                 android:id="@+id/btnLogin"

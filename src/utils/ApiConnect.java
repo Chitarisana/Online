@@ -11,14 +11,14 @@ import android.util.Log;
 
 public class ApiConnect {
 
-	private static boolean isReloadable(Context context, ICallback callback) {
+	private static boolean isReloadable(Context context, ApiListener callback) {
 		Session session = Session.getInstance(context);
 		int oldOrient = session.getOrientation();
 		int currentOrient = context.getResources().getConfiguration().orientation;
 		session.setOrientation(currentOrient);
-		Log.d("Orientation",oldOrient+"==>"+currentOrient);
-		
-		if (currentOrient != oldOrient
+		Log.d("Orientation", oldOrient + "==>" + currentOrient);
+
+		if (oldOrient != currentOrient
 				&& oldOrient != Configuration.ORIENTATION_UNDEFINED) {
 			callback.onFailure(Errors.DISABLE_RELOAD, null);
 			return false;
@@ -29,7 +29,7 @@ public class ApiConnect {
 		return true;
 	}
 
-	public static void callUrls(Context context, ICallback callback,
+	public static void callUrls(Context context, ApiListener callback,
 			String... strs) {
 		if (isReloadable(context, callback)) {
 			URL[] urls = new URL[strs.length];
@@ -44,7 +44,7 @@ public class ApiConnect {
 		}
 	}
 
-	public static void callImageUrl(Context context, ICallback callback,
+	public static void callImageUrl(Context context, ApiListener callback,
 			String str) {
 		if (isReloadable(context, callback)) {
 			try {

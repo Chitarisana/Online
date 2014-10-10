@@ -201,6 +201,55 @@ public class DbHandler extends SQLiteOpenHelper {
 		return new StudentContact(cursor2Array(cursor));
 	}
 
+	public Boolean addStudyProgram(StudyProgram stdPrg) {
+		return insert(stdPrg, StudyProgram.class, KEY_STUDY_PROGRAM,
+				TABLE_STUDY_PROGRAM);
+	}
+
+	public ArrayList<StudyProgram> getAllStudyProgram() {
+		ArrayList<StudyProgram> list = new ArrayList<StudyProgram>();
+		SQLiteDatabase db = getReadableDatabase();
+		String selectQuery = "SELECT * FROM " + TABLE_STUDY_PROGRAM
+				+ " ORDER BY " + KEY_STUDY_PROGRAM[0];
+		Cursor cursor = db.rawQuery(selectQuery, null);
+		if (cursor.moveToFirst()) {
+			do {
+				list.add(new StudyProgram(cursor2Array(cursor)));
+			} while (cursor.moveToNext());
+		}
+		return list;
+	}
+
+	public ArrayList<Semester> getAllSemester() {
+		ArrayList<Semester> list = new ArrayList<Semester>();
+		String[] keys = Key.KEY_SEMESTER;
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor = db.query(true, TABLE_STUDY_PROGRAM, keys, null, null,
+				null, null, keys[0], null);
+		if (cursor.moveToFirst()) {
+			do {
+				String semID = cursor.getString(0);
+				list.add(new Semester(semID, cursor.getString(1),
+						getStudyProgramListBySemester(semID)));
+			} while (cursor.moveToNext());
+		}
+		return list;
+	}
+
+	public ArrayList<StudyProgram> getStudyProgramListBySemester(String semID) {
+		ArrayList<StudyProgram> list = new ArrayList<StudyProgram>();
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor = db.query(TABLE_STUDY_PROGRAM, KEY_STUDY_PROGRAM,
+				Key.KEY_SEMESTER[0] + "=?",
+				new String[] { String.valueOf(semID) }, null, null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				list.add(new StudyProgram(cursor2Array(cursor)));
+			} while (cursor.moveToNext());
+		}
+		return list;
+	}
+
 	/**
 	 * Insert an object to database using reflect method.
 	 * 

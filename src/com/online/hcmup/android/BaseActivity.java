@@ -3,7 +3,7 @@ package com.online.hcmup.android;
 import model.utils.DialogContent;
 import utils.ApiCall;
 import utils.DialogManager;
-import utils.IDialogCallback;
+import utils.DialogListener;
 import utils.Session;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -85,7 +85,7 @@ public class BaseActivity extends Activity {
 		dialog = DialogManager.showAlertDialog(this, d.getMessage(),
 				getString(d.getPosButton()),
 				d.getNegButton() != -1 ? getString(d.getNegButton()) : null,
-				new IDialogCallback() {
+				new DialogListener() {
 
 					@Override
 					public void setOnPositiveButtonClicked() {

@@ -135,8 +135,9 @@ public class Utils {
 	}
 
 	public static void showError(Context context, int errorID) {
-		Toast.makeText(context, Errors.getError(errorID), Toast.LENGTH_SHORT)
-				.show();
+		if (errorID != Errors.DISABLE_RELOAD)
+			Toast.makeText(context, Errors.getError(errorID),
+					Toast.LENGTH_SHORT).show();
 	}
 
 	public static void showToast(Context context, String message) {
@@ -147,7 +148,7 @@ public class Utils {
 		showToast(context, context.getString(resId));
 	};
 
-	public static void saveToInternalSorage(Context context, Bitmap bitmapImage) {
+	public static void saveImageToIS(Context context, Bitmap bitmapImage) {
 		Session session = Session.getInstance(context);
 		String fileName = "profile.png";
 		session.setImageName(fileName);

@@ -1,5 +1,6 @@
 package com.online.hcmup.android;
 
+import utils.Utils;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -24,7 +25,8 @@ public class BaseFragment extends Fragment {
 		// Handle item selection
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			getActivity().onBackPressed();
+			Utils.hideKeyboard(context);
+			context.onBackPressed();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

@@ -7,9 +7,10 @@
     <color name="info_right">@color/main</color>
     <color name="course">#027fff</color>
     <color name="contact">#C40203</color>
-    <color name="hover">#45a0f4</color>
+    <color name="hover">#E4E5FF</color>
     <color name="registered">#ebd229</color>
     <color name="disaccumulated">#444b53</color>
+    <color name="help_background">#5b5b5b</color>
     <color name="schedule">#ffae00</color>
     <color name="main">#0c4775</color>
     <color name="white">#fff</color>
@@ -18,15 +19,21 @@
     <color name="news_list_title">#0000ff</color>
     <color name="news_list_date">#231f20</color>
     <color name="news_list_short">#000</color>
-    <color name="divider_news">#f57b20</color>
     <color name="student_name">@color/white</color>
     <color name="student_id">#fbfe02</color>
     <color name="score">#731bcd</color>
     <color name="gradient_start">#054eb5</color>
     <color name="gradient_end">#9ac8ff</color>
-    <color name="menu_divider">#d5d5d5</color>
+    <color name="lv_content">@color/white</color>
+    <color name="header_study_program">#0a550a</color>
+    <color name="key_study_program">@color/main</color>
+    <color name="value_study_program">#5fb6fa</color>
+    <color name="divider_default">#e4e4e4</color>
+    <color name="divider_menu">#d5d5d5</color>
+    <color name="divider_news">#f57b20</color>
+    <color name="divider_study_program">#e6e6e6</color>
 
-    <string name="app_name">Online Mobile HCMUP</string>
+    <string name="app_name">Online Mobile</string>
     <string name="app_title">Hệ thống online trường ĐH Sư phạm TPHCM</string>
     <string name="setting">Thiết lập</string>
     <!-- Menu -->
@@ -118,6 +125,19 @@
     <string name="edit_contact">Sửa thông tin</string>
     <string name="edit_contact_title">Sửa thông tin liên lạc</string>
     <string name="edit_contact_success">Sửa thành công.</string>
+    <string name="study_program_credit">Số tc</string>
+    <string name="study_program_title">Kế hoạch đào tạo tổng thể</string>
+    <string name="help_title">Chọn 1 HP để xem chi tiết</string>
+    <string name="help_title_exam">Chọn 1 HP để xem lịch thi</string>
+    <string name="help_change_curri">Học phần: </string>
+    <string name="help_change_exam">Lịch thi Học phần: </string>
+    <string name="register_curriculum_result">Kết quả đăng ký</string>
+    <string name="menu_view_details">Xem chi tiết</string>
+    <string name="menu_view_current">Xem hiện tại</string>
+    <string name="register_curriculum_result_registered">Các học phần đã đăng ký</string>
+    <string name="register_curriculum_result_current">Các học phần hiện tại</string>
+    <string name="register_curriculum_disaccumulate">Các học phần chưa tích lũy</string>
+    <string name="register_curriculum_register">Đăng ký học phần</string>
     <!-- <string name="title_activity_private">PrivateActivity</string> -->
 
 </resources>

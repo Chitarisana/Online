@@ -14,11 +14,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class ImageCall extends AsyncTask<URL, Void, Bitmap> {
-	private ICallback callback;
+	private ApiListener callback;
 	private Context context;
 	long timestamp;
 
-	public ImageCall(Context context, ICallback callback) {
+	public ImageCall(Context context, ApiListener callback) {
 		this.context = context;
 		this.callback = callback;
 	}
@@ -61,7 +61,7 @@ public class ImageCall extends AsyncTask<URL, Void, Bitmap> {
 				Toast.LENGTH_SHORT).show();
 
 		if (result != null) {
-			Utils.saveToInternalSorage(context, result);
+			Utils.saveImageToIS(context, result);
 			callback.onSuccess(null, false);
 		} else {
 			callback.onFailure(Errors.DATA_ERROR, null);

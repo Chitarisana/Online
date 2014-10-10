@@ -25,6 +25,8 @@ public class DialogManager {
 		dialog.setMessage(message);
 		dialog.getWindow().setBackgroundDrawableResource(
 				android.R.color.transparent);
+		dialog.setIndeterminate(false);
+		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		dialog.setCancelable(false);
 		dialog.setMax(100);
 		dialog.show();
@@ -69,7 +71,7 @@ public class DialogManager {
 	 */
 	public static AlertDialog showAlertDialog(final Context context,
 			String message, String posButton, String negButton,
-			final IDialogCallback callback) {
+			final DialogListener callback) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(
 				new ContextThemeWrapper(context, R.style.AlertDialogCustom));
 		builder.setMessage("");
@@ -112,7 +114,7 @@ public class DialogManager {
 	 */
 	public static AlertDialog showAlertDialog(final Context context,
 			int message, int posButton, int negButton,
-			final IDialogCallback callback) {
+			final DialogListener callback) {
 		return showAlertDialog(context, context.getString(message),
 				context.getString(posButton),
 				negButton != -1 ? context.getString(negButton) : null, callback);

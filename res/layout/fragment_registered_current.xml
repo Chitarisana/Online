@@ -1,0 +1,63 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/bounder_padding" >
+
+    <TextView
+        android:id="@+id/studentName"
+        style="@style/TextView.TextStyle.Bold.StudentName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/studentID"
+        style="@style/TextView.TextStyle.Bold.StudentID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/s10" >
+
+        <ListView
+            android:id="@+id/reg_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:minHeight="@dimen/s20" />
+
+        <TextView
+            android:id="@+id/help"
+            style="@style/TextView.TextStyle.Title.Padding.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/reg_details"
+            android:background="@color/help_background"
+            android:singleLine="false"
+            android:text="@string/help_title" />
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/TextView.TextStyle.Title.Padding.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="left"
+            android:background="@color/registered"
+            android:singleLine="false"
+            android:text="@string/register_curriculum_result_current" />
+
+        <ListView
+            android:id="@+id/reg_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/help"
+            android:layout_below="@+id/title"
+            android:background="@color/white"
+            android:choiceMode="singleChoice" />
+    </RelativeLayout>
+
+</LinearLayout>

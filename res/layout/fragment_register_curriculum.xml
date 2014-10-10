@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/bounder_padding"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btnResult"
+        style="@style/Button.ButtonStyle.RegisterMain"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:background="@drawable/register_btn_0"
+        android:text="@string/register_curriculum_result" />
+
+    <Button
+        android:id="@+id/btnDisaccumulate"
+        style="@style/Button.ButtonStyle.RegisterMain"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:background="@drawable/register_btn_1"
+        android:text="@string/register_curriculum_disaccumulate" />
+
+    <Button
+        android:id="@+id/btnRegister"
+        style="@style/Button.ButtonStyle.RegisterMain"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:background="@drawable/register_btn_2"
+        android:text="@string/register_curriculum_register" />
+
+</LinearLayout>

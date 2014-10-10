@@ -61,4 +61,8 @@ public class StudentCourse {
 			return null;
 		}
 	}
+
+	public String[] toArray() {
+		return strs;
+	}
 }

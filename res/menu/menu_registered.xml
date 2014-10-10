@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_view_current"
+        android:showAsAction="always|withText"
+        android:title="@string/menu_view_current"/>
+    <item
+        android:id="@+id/action_view_all"
+        android:showAsAction="always|withText"
+        android:title="@string/menu_view_details"/>
+
+</menu> <!-- android:icon="@drawable/ic_login" -->

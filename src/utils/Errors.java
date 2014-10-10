@@ -12,9 +12,9 @@ public class Errors {
 	static {
 		ERROR = new SparseArray<String>();
 		ERROR.append(JSON_ERROR, "Lỗi parse JSON");
-		ERROR.append(CONNECTION_ERROR, "Kết nối không thành công");
+		ERROR.append(CONNECTION_ERROR, "Kết nối thất bại");
 		ERROR.append(DATA_ERROR, "Dữ liệu sai");
-		ERROR.append(DISABLE_RELOAD, "Không cần tải lại");
+		ERROR.append(DISABLE_RELOAD,""/* "Không cần tải lại"*/);
 		ERROR.append(INPUT_ERROR, "Dữ liệu đầu vào không đúng");
 		// ERROR.lock();
 

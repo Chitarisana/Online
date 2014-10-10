@@ -22,7 +22,7 @@
         android:layout_gravity="start"
         android:background="@drawable/shadow"
         android:choiceMode="singleChoice"
-        android:divider="@color/menu_divider"
+        android:divider="@color/divider_menu"
         android:dividerHeight="@dimen/s1" />
 
 </android.support.v4.widget.DrawerLayout>

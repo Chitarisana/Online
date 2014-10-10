@@ -15,17 +15,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import utils.ApiConnect;
+import utils.ApiListener;
 import utils.Constant;
-import utils.ICallback;
 import utils.Key;
 import utils.Link;
 import utils.Session;
 import utils.Utils;
-import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,7 +42,6 @@ import android.widget.TextView;
 public class StudentFragment extends BaseFragment {
 	public static int TYPE;
 	Session session;
-	Activity context;
 	DbHandler db;
 	ListView list;
 	LinearLayout list1, list2;
@@ -68,6 +67,7 @@ public class StudentFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		Log.d("Student Fragment", "on create view");
 		context = getActivity();
 		context.getActionBar().setDisplayHomeAsUpEnabled(true);
 		db = DbHandler.getInstance(context);
@@ -137,7 +137,7 @@ public class StudentFragment extends BaseFragment {
 		frame.addView(inflater.inflate(LAYOUTS[TYPE], frame, false));
 		setControl();
 
-		ApiConnect.callUrls(context, new ICallback() {
+		ApiConnect.callUrls(context, new ApiListener() {
 
 			@Override
 			public void onSuccess(Object json, boolean isArray) {
@@ -152,7 +152,7 @@ public class StudentFragment extends BaseFragment {
 									.toString());
 							db.addStudentInfo(info);
 							// Load Image
-							ApiConnect.callImageUrl(context, new ICallback() {
+							ApiConnect.callImageUrl(context, new ApiListener() {
 
 								@Override
 								public void onSuccess(Object json,
@@ -163,7 +163,7 @@ public class StudentFragment extends BaseFragment {
 								@Override
 								public void onFailure(int statusCode,
 										String jsonString) {
-									Utils.showToast(context, jsonString);
+									Utils.showError(context, statusCode);
 								}
 							}, info.FileImage);
 							break;
@@ -187,13 +187,14 @@ public class StudentFragment extends BaseFragment {
 
 			@Override
 			public void onFailure(int statusCode, String jsonString) {
+				Utils.showError(context, statusCode);
 				loadDb();
 			}
 		}, String.format(LINKS[TYPE], session.getStudentID()));
 	}
 
 	private KeyValueAdapter dataToAdapter(String[] keys, String[] keys_vi,
-			Object data, int layoutId) {
+			Object data, int layoutId, Boolean isKeyDepend) {
 		String[] values = Utils.getValues(data, data.getClass(), keys);
 		List<KeyValuePair> listAdapter = new ArrayList<KeyValuePair>();
 		for (int i = 0; i < keys_vi.length; i++) {
@@ -201,20 +202,21 @@ public class StudentFragment extends BaseFragment {
 		}
 		if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			return new KeyValueAdapter(context, listAdapter, layoutId, 0.75,
-					null);
+					isKeyDepend);
 		} else
-			return new KeyValueAdapter(context, listAdapter, layoutId, 0, null);
+			return new KeyValueAdapter(context, listAdapter, layoutId, 0,
+					isKeyDepend);
 	}
 
 	private void setAdapter(String[] keys, String[] keys_vi, Object data,
 			ListView list) {
-		list.setAdapter(dataToAdapter(keys, keys_vi, data, 0));
+		list.setAdapter(dataToAdapter(keys, keys_vi, data, 0, null));
 	}
 
 	private void setAdapter(String[] keys, String[] keys_vi, Object data,
 			LinearLayout list) {
 		KeyValueAdapter adapter = dataToAdapter(keys, keys_vi, data,
-				R.layout.row_key_value_divider);
+				R.layout.row_key_value_divider, true);
 		if (list.getChildCount() > 0)
 			list.removeAllViews();
 
@@ -313,7 +315,8 @@ public class StudentFragment extends BaseFragment {
 
 	private void loadImage() {
 		Bitmap bitmap = Utils.getBitmapImage(context);
-		if (bitmap != null)
+		if (bitmap != null) {
 			avatar.setImageBitmap(bitmap);
+		}
 	}
 }

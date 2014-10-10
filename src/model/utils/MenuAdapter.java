@@ -18,7 +18,9 @@ import android.widget.TextView;
 import com.online.hcmup.android.PrivateActivity;
 import com.online.hcmup.android.PrivateActivity.SliderMenu;
 import com.online.hcmup.android.R;
+import com.online.hcmup.android.RegisterCurriculumFragment;
 import com.online.hcmup.android.StudentFragment;
+import com.online.hcmup.android.StudyProgramFragment;
 
 public class MenuAdapter extends BaseAdapter {
 
@@ -83,6 +85,15 @@ public class MenuAdapter extends BaseAdapter {
 					StudentFragment.TYPE = 0;
 					openFragment(new StudentFragment(),
 							Constant.TAG_STUDENT_INFO, menu.get(position).Text);
+					break;
+				case 2: // Study Program --> StudyProgramFragment
+					openFragment(new StudyProgramFragment(),
+							Constant.TAG_STUDY_PROGRAM, menu.get(position).Text);
+					break;
+				case 3: // Register Curriculum --> RegisterCurriculumFragment
+					openFragment(new RegisterCurriculumFragment(),
+							Constant.TAG_REGISTER_CURRICULUM,
+							menu.get(position).Text);
 					break;
 				}
 			}

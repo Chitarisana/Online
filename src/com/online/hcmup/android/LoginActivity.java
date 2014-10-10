@@ -4,7 +4,7 @@ import java.util.Locale;
 
 import model.hcmup.DbHandler;
 import utils.ApiConnect;
-import utils.ICallback;
+import utils.ApiListener;
 import utils.Link;
 import utils.Session;
 import utils.Utils;
@@ -88,7 +88,7 @@ public class LoginActivity extends BaseActivity {
 				.toUpperCase(Locale.US);
 		final String password = pass.getText().toString().trim();
 		if (studentID.length() > 0 && password.length() > 0) {
-			ApiConnect.callUrls(this, new ICallback() {
+			ApiConnect.callUrls(this, new ApiListener() {
 
 				@Override
 				public void onSuccess(Object json, boolean isArray) {
@@ -123,6 +123,7 @@ public class LoginActivity extends BaseActivity {
 
 	public void initDb() {
 		// TODO
+		// session student name
 		// load all links
 	}
 }

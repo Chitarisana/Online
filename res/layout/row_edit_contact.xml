@@ -15,10 +15,10 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/s10"
         android:layout_marginRight="@dimen/s10"
-        android:background="@drawable/edittext_bg"
+        android:freezesText="true"
         android:gravity="right"
-        android:inputType="textVisiblePassword"
-        android:singleLine="false"
+        android:inputType="text"
+        android:singleLine="true"
         android:textColor="@color/info_right" />
 
     <!-- Key -->

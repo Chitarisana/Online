@@ -20,6 +20,9 @@ public class KeyValueAdapter extends BaseAdapter {
 	int layout;
 	int maxWidth;
 	double percent;
+	int keyColor;
+	int valueColor;
+	int dividerColor;
 
 	/*
 	 * isKeyDepend = true: Key's size = static, Value's size = dynamic
@@ -33,16 +36,22 @@ public class KeyValueAdapter extends BaseAdapter {
 		this.isKey = isKeyDepend;
 		this.layout = layoutID;
 		this.maxWidth = maxWidth;
+		keyColor = valueColor = dividerColor = -1;
 	}
 
 	public KeyValueAdapter(Activity context, List<KeyValuePair> data,
 			int layoutID, double percent, Boolean isKeyDepend) {
-		this.data = data;
-		this.context = context;
-		this.isKey = isKeyDepend;
-		this.layout = layoutID;
-		this.maxWidth = 0;
+		this(context, data, layoutID, 0, isKeyDepend);
 		this.percent = percent;
+	}
+
+	public KeyValueAdapter(Activity context, List<KeyValuePair> data,
+			int layoutID, double percent, int keyColor, int valueColor,
+			int dividerColor, Boolean isKeyDepend) {
+		this(context, data, layoutID, percent, isKeyDepend);
+		this.keyColor = keyColor;
+		this.valueColor = valueColor;
+		this.dividerColor = dividerColor;
 	}
 
 	@Override
@@ -64,13 +73,27 @@ public class KeyValueAdapter extends BaseAdapter {
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		View row = (context.getLayoutInflater()).inflate(layout != 0 ? layout
 				: R.layout.row_key_value, null);
+
 		TextView key = (TextView) row.findViewById(R.id.key);
+
 		TextView value = (TextView) row.findViewById(R.id.value);
 		RelativeLayout rowLayout = (RelativeLayout) row
 				.findViewById(R.id.row_layout);
 
 		key.setText(data.get(position).Key);
 		value.setText(data.get(position).Value);
+
+		if (keyColor != -1) {
+			key.setTextColor(context.getResources().getColor(keyColor));
+		}
+		if (valueColor != -1) {
+			value.setTextColor(context.getResources().getColor(valueColor));
+		}
+		View divider = row.findViewById(R.id.divider);
+		if (divider != null && dividerColor != -1) {
+			divider.setBackgroundColor(context.getResources().getColor(
+					dividerColor));
+		}
 
 		DisplayMetrics displaymetrics = new DisplayMetrics();
 		context.getWindowManager().getDefaultDisplay()
@@ -99,18 +122,22 @@ public class KeyValueAdapter extends BaseAdapter {
 
 		if (isKey == null) {
 			double percent = 1.0 * keyWidth / (keyWidth + valueWidth);
-			percent = Math.max(percent, 0.2);
+			percent = Math.max(percent, 0.3);
 			key.setMaxWidth((int) (total * percent));
-			value.setMaxWidth((int) (total * (1 - percent))); // chua on lam...
+			value.setMaxWidth((int) (total * (1 - percent))); // chua on
+																// lam...
 		} else if (isKey) {
+			int midPadding = key.getPaddingRight() + value.getPaddingLeft();
 			// value.setMaxWidth(total - key.getMeasuredWidth());
-			value.setPadding(key.getMeasuredWidth() + padding,
+			value.setPadding(key.getMeasuredWidth() + midPadding,
 					value.getPaddingTop(), value.getPaddingRight(),
 					value.getPaddingBottom());
 		} else {
+			int midPadding = key.getPaddingRight() + value.getPaddingLeft();
 			// key.setMaxWidth(total - value.getMeasuredWidth());
 			key.setPadding(key.getPaddingLeft(), key.getPaddingTop(),
-					value.getMeasuredWidth() + padding, key.getPaddingBottom());
+					value.getMeasuredWidth() + midPadding,
+					key.getPaddingBottom());
 		}
 		return row;
 	}

@@ -19,7 +19,7 @@
             android:layout_marginRight="@dimen/bounder_padding"
             android:layout_weight="1"
             android:contentDescription="@string/description"
-            android:scaleType="fitXY" />
+            android:scaleType="fitStart" />
 
         <FrameLayout
             android:id="@+id/student_content"

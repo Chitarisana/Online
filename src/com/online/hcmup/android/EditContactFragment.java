@@ -10,17 +10,17 @@ import model.hcmup.StudentContact;
 import model.utils.KeyValueAdapter;
 import model.utils.KeyValuePair;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import utils.ApiConnect;
 import utils.Errors;
-import utils.ICallback;
+import utils.ApiListener;
 import utils.Key;
 import utils.Link;
 import utils.Session;
 import utils.Utils;
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,26 +34,28 @@ import android.widget.LinearLayout;
 
 public class EditContactFragment extends BaseFragment {
 	Session session;
-	Activity context;
-	DbHandler db;
-	View view;
 	LinearLayout[] contents;
 	Button btnOK, btnCancel;
-	String[][] keys = new String[][] { Key.KEY_STUDENT_LOAD_EDITCONTACT_1_VI,
+	String[][] keys = new String[][] { Key.KEY_STUDENT_LOAD_EDITCONTACT_1,
+			Key.KEY_STUDENT_LOAD_EDITCONTACT_2,
+			Key.KEY_STUDENT_LOAD_EDITCONTACT_3 };
+	String[][] keys_vi = new String[][] {
+			Key.KEY_STUDENT_LOAD_EDITCONTACT_1_VI,
 			Key.KEY_STUDENT_LOAD_EDITCONTACT_2_VI,
-			Key.KEY_STUDENT_LOAD_EDITCONTACT_3_VI }, values;
+			Key.KEY_STUDENT_LOAD_EDITCONTACT_3_VI };
+	String[][] values;
 	String studentID;
-	StudentContact contact;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		Log.d("Edit Contact", "on Create View");
 		context = getActivity();
 		session = Session.getInstance(context);
 		session.checkLogin();
 		setOnFragment(R.string.edit_contact_title);
 
-		view = inflater.inflate(R.layout.fragment_edit_contact, container,
+		View view = inflater.inflate(R.layout.fragment_edit_contact, container,
 				false);
 
 		contents = new LinearLayout[] {
@@ -69,6 +71,7 @@ public class EditContactFragment extends BaseFragment {
 
 			@Override
 			public void onClick(View arg0) {
+				Utils.hideKeyboard(context);
 				sendContact();
 			}
 		});
@@ -80,23 +83,32 @@ public class EditContactFragment extends BaseFragment {
 				onBackPressed();
 			}
 		});
+		return view;
+	}
 
+	@Override
+	public void onStart() {
+		super.onStart();
+		// TODO: why call it at onCreateView is not work???????????
 		// Because don't have load contact function, it's just for current
-		contact = DbHandler.getInstance(context).getStudentContact();
-		String jsonString = contact.toString();
+		StudentContact contact = DbHandler.getInstance(context)
+				.getStudentContact();
+		Log.d("Edit Contact", "load local contact");
+		Log.d("Contact", contact.toString());
+
 		try {
-			JSONObject js = new JSONObject(jsonString);
+			JSONObject js = new JSONObject(contact.toString());
 			for (int j = 0; j < keys.length; j++) {
 				String[] value = Utils.getValues(js, keys[j]).values;
-				if (value != null)
+				if (value != null) {
 					values[j] = value;
+				}
 			}
 			loadContact();
 		} catch (JSONException e) {
 			Utils.showError(context, Errors.DATA_ERROR);
 			e.printStackTrace();
-		}		
-		return view;
+		}
 	}
 
 	@Override
@@ -105,64 +117,72 @@ public class EditContactFragment extends BaseFragment {
 			menu.clear();
 	}
 
-	private String[] getValues(LinearLayout list) {
-		int num = list.getChildCount();
-		String[] values = new String[num];
-		for (int i = 0; i < num; i++) {
-			View view = list.getChildAt(i);
-			EditText value = (EditText) view.findViewById(R.id.value);
-			try {
-				values[i] = URLEncoder.encode(value.getText().toString(),
-						"UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-				values[i] = "";
-			}
-		}
-		return values;
-	}
-
 	private void loadContact() {
+		Log.d("Edit Contact", "Load contact to view");
 		for (int i = 0; i < contents.length; i++) {
 			List<KeyValuePair> listAdapter = new ArrayList<KeyValuePair>();
-			for (int j = 0; j < keys[i].length; j++) {
-				listAdapter.add(new KeyValuePair(keys[i][j], values[i][j]));
+			for (int j = 0; j < keys_vi[i].length; j++) {
+				listAdapter.add(new KeyValuePair(keys_vi[i][j], values[i][j]));
 			}
 
 			KeyValueAdapter adapter = new KeyValueAdapter(context, listAdapter,
 					R.layout.row_edit_contact, 0, true);
 
-			contents[i].removeAllViews();
+			if (contents[i].getChildCount() > 0)
+				contents[i].removeAllViews();
+
 			for (int j = 0; j < adapter.getCount(); j++) {
 				View item = adapter.getView(j, null, null);
 				contents[i].addView(item);
+				Log.d("adapter", ((EditText) item.findViewById(R.id.value))
+						.getText().toString());
 			}
 		}
 	}
 
 	private void sendContact() {
-		for (int i = 0; i < contents.length; i++) {
-			for (int j = 0; j < contents[i].getChildCount(); j++) {
-				View v = contents[i].getChildAt(j);
-				EditText value = (EditText) v.findViewById(R.id.value);
-				Log.d("Value", value.getText() + "kk");
-			}
-		}
 		ArrayList<String> values = new ArrayList<String>();
 		values.add(studentID);
-		for (int i = 0; i < keys.length; i++) {
-			String[] value = getValues(contents[i]);
-			for (int j = 0; j < value.length; j++) {
-				values.add(value[j]);
+		for (int i = 0; i < contents.length; i++) {
+			for (int j = 0; j < contents[i].getChildCount(); j++) {
+				View view = contents[i].getChildAt(j);
+				EditText value = (EditText) view.findViewById(R.id.value);
+				try {
+					values.add(URLEncoder.encode(value.getText().toString(),
+							"UTF-8"));
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+					values.add("");
+				}
 			}
 		}
+		Log.d("url",
+				String.format(Link.STUDENT_EDIT_INFO,
+						(Object[]) values.toArray(new String[values.size()])));
 		if (values.size() > 1) {
-			ApiConnect.callUrls(context,
-					new ICallback() {
+			ApiConnect.callUrls(context, new ApiListener() {
+
+				@Override
+				public void onSuccess(Object json, boolean isArray) {
+					// Save contact to db
+					// call new url because the result of past url is not same
+					// the one in db
+					ApiConnect.callUrls(context, new ApiListener() {
 
 						@Override
 						public void onSuccess(Object json, boolean isArray) {
-							// TODO save contact to db
+							if (isArray) {
+								JSONArray datas = (JSONArray) json;
+								try {
+									JSONObject obj = datas.getJSONObject(0);
+									StudentContact student = new StudentContact(
+											obj.toString());
+									DbHandler.getInstance(context)
+											.addStudentContact(student);
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+							}
 							Utils.showToast(context,
 									R.string.edit_contact_success);
 							onBackPressed();
@@ -173,8 +193,16 @@ public class EditContactFragment extends BaseFragment {
 							Utils.showError(context, statusCode);
 							onBackPressed();
 						}
-					}, String.format(Link.STUDENT_EDIT_INFO, (Object[]) values
-							.toArray(new String[values.size()])));
+					}, String.format(Link.STUDENT_CONTACT, studentID));
+				}
+
+				@Override
+				public void onFailure(int statusCode, String jsonString) {
+					Utils.showError(context, statusCode);
+					onBackPressed();
+				}
+			}, String.format(Link.STUDENT_EDIT_INFO,
+					(Object[]) values.toArray(new String[values.size()])));
 		} else {
 			Utils.showError(context, Errors.INPUT_ERROR);
 			onBackPressed();

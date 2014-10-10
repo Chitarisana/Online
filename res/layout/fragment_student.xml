@@ -7,11 +7,12 @@
 
     <ImageView
         android:id="@+id/profile"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0sp"
         android:layout_marginBottom="@dimen/s10"
-        android:layout_weight="1" android:scaleType="fitXY" 
-        android:contentDescription="@string/description" />
+        android:layout_weight="1"
+        android:contentDescription="@string/description"
+        android:scaleType="fitStart" />
 
     <FrameLayout
         android:id="@+id/student_content"

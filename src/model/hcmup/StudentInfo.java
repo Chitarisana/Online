@@ -86,4 +86,8 @@ public class StudentInfo {
 			return null;
 		}
 	}
+
+	public String[] toArray() {
+		return strs;
+	}
 }

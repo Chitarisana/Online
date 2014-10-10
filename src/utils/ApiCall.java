@@ -20,13 +20,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class ApiCall extends AsyncTask<URL, Integer, Long> {
-	private ICallback callback;
+	private ApiListener callback;
 	private Context context;
 	private List<String> results;
 	public static ProgressDialog dialog;
 	long timestamp;
 
-	public ApiCall(Context context, ICallback callback) {
+	public ApiCall(Context context, ApiListener callback) {
 		this.context = context;
 		this.callback = callback;
 	}
@@ -46,6 +46,8 @@ public class ApiCall extends AsyncTask<URL, Integer, Long> {
 	protected Long doInBackground(URL... urls) {
 		int count = urls.length;
 		long totalSize = 0;
+		// long total = 100;
+		// long itemcount = 0;
 		List<String> resultList = new ArrayList<String>();
 		for (int i = 0; i < count; i++) {
 			publishProgress((int) ((i / (float) count) * 100));
@@ -69,6 +71,10 @@ public class ApiCall extends AsyncTask<URL, Integer, Long> {
 				String resultPiece;
 				while ((resultPiece = in.readLine()) != null) {
 					resultBuilder.append(resultPiece);
+					// itemcount++;
+					// Log.d("item count", itemcount + "");
+					// publishProgress((int) ((itemcount / (float) total) *
+					// 100));
 				}
 				in.close();
 				totalSize++;
@@ -97,7 +103,8 @@ public class ApiCall extends AsyncTask<URL, Integer, Long> {
 
 	@Override
 	protected void onPostExecute(Long result) {
-
+		if (dialog != null)
+			dialog.setProgress(100);
 		// Show the time had been used to connected to server.
 		long time = System.currentTimeMillis() - timestamp;
 		Toast.makeText(context,
@@ -110,7 +117,8 @@ public class ApiCall extends AsyncTask<URL, Integer, Long> {
 			dialog = null;
 		}
 		if (result <= 0) {
-			Utils.showConnectionError(context);
+			callback.onFailure(Errors.CONNECTION_ERROR, null);
+			// Utils.showConnectionError(context);
 			return;
 		}
 		// Handler results
@@ -124,7 +132,9 @@ public class ApiCall extends AsyncTask<URL, Integer, Long> {
 							obj.getString(Key.KEY_ERRORS));
 					continue;
 				}
-				if (obj.get(Key.KEY_DATA) == null) {
+
+				if ("".equals(obj.get(Key.KEY_ERRORS).toString())
+						&& !obj.has(Key.KEY_DATA)) {
 					Log.d("Check if array null", obj.toString());
 					callback.onSuccess(null, false);
 					continue;

@@ -12,8 +12,7 @@ import org.json.JSONObject;
 
 import utils.ApiConnect;
 import utils.Constant;
-import utils.Errors;
-import utils.ICallback;
+import utils.ApiListener;
 import utils.Link;
 import utils.Session;
 import utils.Utils;
@@ -55,7 +54,7 @@ public class NewsListFragment extends BaseFragment {
 		// JSON = extras.getString(KEY_JSON);
 
 		if (TYPE == TYPE_PUBLIC)
-			ApiConnect.callUrls(getActivity(), new ICallback() {
+			ApiConnect.callUrls(getActivity(), new ApiListener() {
 
 				@Override
 				public void onSuccess(Object json, boolean isArray) {
@@ -74,11 +73,11 @@ public class NewsListFragment extends BaseFragment {
 
 				@Override
 				public void onFailure(int statusCode, String jsonString) {
-					onFailureTask(statusCode, jsonString);
+					Utils.showError(context, statusCode);
 				}
 			}, String.format(Link.PUBLIC_NEWS, 1, 0));
 		else
-			ApiConnect.callUrls(getActivity(), new ICallback() {
+			ApiConnect.callUrls(getActivity(), new ApiListener() {
 
 				@Override
 				public void onSuccess(Object json, boolean isArray) {
@@ -102,7 +101,7 @@ public class NewsListFragment extends BaseFragment {
 
 				@Override
 				public void onFailure(int statusCode, String jsonString) {
-					onFailureTask(statusCode, jsonString);
+					Utils.showError(context, statusCode);
 					setPrivateNewsAdapter();
 				}
 			}, String.format(Link.PRIVATE_NEWS,
@@ -114,14 +113,7 @@ public class NewsListFragment extends BaseFragment {
 	private void setPrivateNewsAdapter() {
 		listView.setAdapter(new PrivateNewsAdapter(getActivity(), db
 				.getAllPrivateNews()));
-	}
-
-	private void onFailureTask(int statusCode, String jsonString) {
-		if (statusCode == Errors.CONNECTION_ERROR) {
-			Utils.showConnectionError(getActivity());
-		} else {
-			Utils.showToast(getActivity(), jsonString);
-		}
+		Log.d("NewsList", "Load local db");
 	}
 
 	public View loadView(final String titleString, String dateString,

@@ -1,11 +1,10 @@
 package com.online.hcmup.android;
 
 import utils.ApiConnect;
-import utils.ICallback;
+import utils.ApiListener;
 import utils.Link;
 import utils.Session;
 import utils.Utils;
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -21,8 +20,6 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 public class EditPasswordFragment extends BaseFragment {
-
-	Activity context;
 	Session session;
 	EditText oldPass, newPass, reNewPass;
 	LinearLayout mainLayout;
@@ -41,9 +38,9 @@ public class EditPasswordFragment extends BaseFragment {
 		mainLayout = (LinearLayout) view.findViewById(R.id.main_layout);
 		Utils.setMaxWidth(mainLayout);
 
-		oldPass = (EditText) view.findViewById(R.id.txt_old);
-		newPass = (EditText) view.findViewById(R.id.txt_new);
-		reNewPass = (EditText) view.findViewById(R.id.txt_renew);
+		oldPass = (EditText) view.findViewById(R.id.txt_oldpass);
+		newPass = (EditText) view.findViewById(R.id.txt_newpass);
+		reNewPass = (EditText) view.findViewById(R.id.txt_renewpass);
 
 		reNewPass.setOnEditorActionListener(new OnEditorActionListener() {
 			@Override
@@ -62,6 +59,7 @@ public class EditPasswordFragment extends BaseFragment {
 
 			@Override
 			public void onClick(View arg0) {
+				Utils.hideKeyboard(context);
 				actionEdit();
 			}
 		});
@@ -93,21 +91,21 @@ public class EditPasswordFragment extends BaseFragment {
 			return;
 		}
 		ApiConnect.callUrls(context,
-				new ICallback() {
+				new ApiListener() {
 
 					@Override
 					public void onSuccess(Object json, boolean isArray) {
 						Utils.showToast(context,
 								R.string.edit_password_noti_success);
-						// TODO
 						// edit in session or not???
 						// need edit to make token ==> if needed
+						// TODO: edit token
 						onBackPressed();
 					}
 
 					@Override
 					public void onFailure(int statusCode, String jsonString) {
-						Utils.showToast(context, jsonString);
+						Utils.showError(context, statusCode);
 					}
 				}, String.format(Link.STUDENT_CHANGE_PASSWORD,
 						session.getStudentID(), getText(oldPass),

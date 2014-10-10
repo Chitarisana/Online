@@ -21,6 +21,7 @@ public class PrivateActivity extends BaseActivity {
 	public static DrawerLayout mainLayout;
 	public static ActionBarDrawerToggle menuToggle;
 	private CharSequence mainTitle;
+	ListView menuLV;
 	public static CharSequence itemTitle, title;
 	public static PrivateActivity context;
 	// list of fragment TAG that will pop back when button back pressed.
@@ -44,7 +45,7 @@ public class PrivateActivity extends BaseActivity {
 		// add slider bar
 		mainTitle = getString(R.string.app_name);
 		mainLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		ListView menuLV = (ListView) findViewById(R.id.menu);
+		menuLV = (ListView) findViewById(R.id.menu);
 
 		String[] menuArray = getResources().getStringArray(R.array.menu_array);
 		TypedArray iconArray = getResources().obtainTypedArray(
@@ -58,7 +59,7 @@ public class PrivateActivity extends BaseActivity {
 		iconArray.recycle();
 
 		menuLV.setAdapter(new MenuAdapter(this, sliderMenu, mainLayout, menuLV));
-
+		
 		menuToggle = new ActionBarDrawerToggle(this, mainLayout,
 				R.drawable.ic_menu, 0, 0) {
 			public void onDrawerClosed(View view) {
@@ -74,6 +75,7 @@ public class PrivateActivity extends BaseActivity {
 		mainLayout.setDrawerListener(menuToggle);
 
 		if (savedInstanceState == null) {
+			menuLV.setItemChecked(0, true);
 			loadMainFragment();
 		}
 	}

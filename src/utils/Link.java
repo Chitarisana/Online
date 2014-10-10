@@ -3,35 +3,34 @@ package utils;
 public class Link {
 	// Test link
 	static final String BASE_URL = "http://monlinews.appspot.com/";
-	public static final String PUBLIC_NEWS = BASE_URL + "publicnews";
-	public static final String PRIVATE_NEWS = BASE_URL
-			+ "privatenews?studentID=%s";
-	public static final String LOGIN = BASE_URL
-			+ "login?studentID=%s&password=%s";
-	public static final String STUDENT_INFO = BASE_URL
-			+ "studentinfo?studentID=%s";
-	public static final String STUDENT_COURSE = BASE_URL
-			+ "courseinfo?studentID=%s";
-	public static final String STUDENT_CONTACT = BASE_URL
-			+ "contactinfo?studentID=%s";
-	public static final String STUDENT_CHANGE_PASSWORD = BASE_URL
-			+ "changePass?userID=%s&oldPass=%s&newPass=%s";
+	/*
+	 * public static final String PUBLIC_NEWS = BASE_URL + "publicnews"; public
+	 * static final String PRIVATE_NEWS = BASE_URL + "privatenews?studentID=%s";
+	 * public static final String LOGIN = BASE_URL +
+	 * "login?studentID=%s&password=%s"; public static final String STUDENT_INFO
+	 * = BASE_URL + "studentinfo?studentID=%s"; public static final String
+	 * STUDENT_COURSE = BASE_URL + "courseinfo?studentID=%s"; public static
+	 * final String STUDENT_CONTACT = BASE_URL + "contactinfo?studentID=%s";
+	 * public static final String STUDENT_CHANGE_PASSWORD = BASE_URL +
+	 * "changePass?userID=%s&oldPass=%s&newPass=%s";
+	 */
 	// private static final String BASE_URL =
 	// "http://10.0.0.199/mobilews/mservice/Service.svc/";
-	// public static final String PUBLIC_NEWS = BASE_URL
-	// + "mainInfo?groupCateID=%s&messageCateID=%s";
-	// public static final String LOGIN = BASE_URL
-	// + "actionSel?studentID=%s&password=%s";
-	// public static final String PRIVATE_NEWS = BASE_URL
-	// + "newsInfo?studentID=%s";
-	// public static final String STUDENT_INFO = BASE_URL
-	// + "studentInfo?studentID=%s";
-	// public static final String STUDENT_COURSE = BASE_URL
-	// + "courseInfo?studentID=%s";
-	// public static final String STUDENT_CONTACT = BASE_URL
-	// + "contactInfo?studentID=%s";
-	// public static final String STUDENT_CHANGE_PASSWORD = BASE_URL
-	// + "changePass?userID=%s&oldPass=%s&newPass=%s";
+
+	public static final String PUBLIC_NEWS = BASE_URL
+			+ "mainInfo?groupCateID=%s&messageCateID=%s";
+	public static final String LOGIN = BASE_URL
+			+ "actionSel?studentID=%s&password=%s";
+	public static final String PRIVATE_NEWS = BASE_URL
+			+ "newsInfo?studentID=%s";
+	public static final String STUDENT_INFO = BASE_URL
+			+ "studentInfo?studentID=%s";
+	public static final String STUDENT_COURSE = BASE_URL
+			+ "courseInfo?studentID=%s";
+	public static final String STUDENT_CONTACT = BASE_URL
+			+ "contactInfo?studentID=%s";
+	public static final String STUDENT_CHANGE_PASSWORD = BASE_URL
+			+ "changePass?userID=%s&oldPass=%s&newPass=%s";
 	public static final String STUDENT_EDIT_INFO = BASE_URL
 			+ "updateInfo?studentID=%s&studentPhone=%s&studentMobile=%s&studentEmail=%s&studentContactAddress=%s&contactPersonName=%s&contactPersonPhone=%s&contactPersonAddress=%s&SMSAccount1=%s&SMSAccount2=%s&note=%s";
 	public static final String STUDY_PROGRAM = BASE_URL
