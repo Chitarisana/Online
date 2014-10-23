@@ -250,6 +250,45 @@ public class DbHandler extends SQLiteOpenHelper {
 		return list;
 	}
 
+	public Boolean addRegisteredCurriculum(RegisteredStudyUnit obj) {
+		return insert(obj, RegisteredStudyUnit.class, KEY_REGISTERED,
+				TABLE_REGISTERED);
+	}
+	public  ArrayList<TermStudy> getAllTermYear() {
+		ArrayList<TermStudy> list = new ArrayList<TermStudy>();
+		String[] keys = Key.KEY_TERM_YEAR;
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor = db.query(true, TABLE_REGISTERED, keys, null, null,
+				null, null, keys[0] + " ASC, " + keys[1] + " ASC", null);
+		if (cursor.moveToFirst()) {
+			do {
+				String year = cursor.getString(0);
+				String termID = cursor.getString(1);
+				list.add(new TermStudy(year, termID, getByTermYear(year,
+						termID)));
+			} while (cursor.moveToNext());
+		}
+		return list;
+	}
+	public  ArrayList<RegisteredStudyUnit> getByTermYear(String year,
+			String termID) {
+		ArrayList<RegisteredStudyUnit> list = new ArrayList<RegisteredStudyUnit>();
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor = db.query(
+				TABLE_REGISTERED,
+				Key.KEY_REGISTER_SCHEDULE,// don't get PK
+				Key.KEY_TERM_YEAR[0] + "=?" + " AND "
+						+ Key.KEY_TERM_YEAR[1] + "=?", new String[] {
+						String.valueOf(year), String.valueOf(termID) },
+				null, null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				list.add(new RegisteredStudyUnit(cursor2Array(cursor)));
+			} while (cursor.moveToNext());
+		}
+		return list;
+	}
+	
 	/**
 	 * Insert an object to database using reflect method.
 	 * 

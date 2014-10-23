@@ -14,7 +14,7 @@
         android:text="@string/key_info_title" />
 
     <ListView
-        android:id="@+id/content"
+        android:id="@+id/std_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

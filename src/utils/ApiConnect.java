@@ -20,10 +20,10 @@ public class ApiConnect {
 
 		if (oldOrient != currentOrient
 				&& oldOrient != Configuration.ORIENTATION_UNDEFINED) {
-			callback.onFailure(Errors.DISABLE_RELOAD, null);
+			callback.onFailure(-1, Errors.DISABLE_RELOAD, null);
 			return false;
 		} else if (!isConnectingToInternet(context)) {
-			callback.onFailure(Errors.CONNECTION_ERROR, null);
+			callback.onFailure(-1, Errors.CONNECTION_ERROR, null);
 			return false;
 		}
 		return true;

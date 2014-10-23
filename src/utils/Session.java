@@ -1,5 +1,8 @@
 package utils;
 
+import java.util.HashMap;
+
+import model.hcmup.DbHandler;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +28,9 @@ public class Session {
 	public static final String KEY_STUDENT_ID = "StudentID";
 	public static final String KEY_PASSWORD = "Password";
 	public static final String KEY_STUDENT_NAME = "StudentName";
+	public static final String KEY_STUDY_PROGRAM = "StudyProgramID";
+	public static final String KEY_TERM_ID = "TermID";
+	public static final String KEY_YEAR_STUDY = "YearStudy";
 
 	public static Session getInstance(Context context) {
 		if (instance == null)
@@ -119,6 +125,7 @@ public class Session {
 		// remember to clear all data and reset default values
 		// TODO
 
+		DbHandler.getInstance(context).deleteAll();
 		editor.clear();
 		editor.commit();
 
@@ -151,4 +158,30 @@ public class Session {
 		return pref.getString(KEY_STUDENT_NAME, null);
 	}
 
+	public void setStudentName(String studentName) {
+		editor.putString(KEY_STUDENT_NAME, studentName);
+		editor.commit();
+	}
+
+	public void setCurrentTermYear(String yearStudy, String termID) {
+		editor.putString(KEY_TERM_ID, termID);
+		editor.putString(KEY_YEAR_STUDY, yearStudy);
+		editor.commit();
+	}
+
+	public HashMap<String, String> getCurrentTermYear() {
+		HashMap<String, String> term = new HashMap<String, String>();
+		term.put(KEY_TERM_ID, pref.getString(KEY_TERM_ID, null));
+		term.put(KEY_YEAR_STUDY, pref.getString(KEY_YEAR_STUDY, null));
+		return term;
+	}
+
+	public void setStudyProgram(String studyProgramID) {
+		editor.putString(KEY_STUDY_PROGRAM, studyProgramID);
+		editor.commit();
+	}
+
+	public String getStudyProgram() {
+		return pref.getString(KEY_STUDY_PROGRAM, null);
+	}
 }

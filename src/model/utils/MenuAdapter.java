@@ -3,8 +3,11 @@ package model.utils;
 import java.util.ArrayList;
 
 import utils.Constant;
+import utils.DialogListener;
+import utils.DialogManager;
 import utils.Session;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -15,10 +18,12 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.online.hcmup.android.MainActivity;
 import com.online.hcmup.android.PrivateActivity;
 import com.online.hcmup.android.PrivateActivity.SliderMenu;
 import com.online.hcmup.android.R;
 import com.online.hcmup.android.RegisterCurriculumFragment;
+import com.online.hcmup.android.StudentFeeFragment;
 import com.online.hcmup.android.StudentFragment;
 import com.online.hcmup.android.StudyProgramFragment;
 
@@ -30,6 +35,7 @@ public class MenuAdapter extends BaseAdapter {
 	public static DrawerLayout mainLayout;
 	public static ListView menuLV;
 	Session session;
+	Dialog dialog;
 
 	public MenuAdapter(Activity a, ArrayList<SliderMenu> m, DrawerLayout mL,
 			ListView mLV) {
@@ -94,6 +100,25 @@ public class MenuAdapter extends BaseAdapter {
 					openFragment(new RegisterCurriculumFragment(),
 							Constant.TAG_REGISTER_CURRICULUM,
 							menu.get(position).Text);
+					break;
+				case 7: // Student Fee
+					openFragment(new StudentFeeFragment(),
+							Constant.TAG_STUDENT_FEE, menu.get(position).Text);
+					break;
+				case 9: // Sign out
+					dialog = DialogManager.showAlertDialog(activity,
+							R.string.logout_noti_detail, R.string.btn_confirm,
+							R.string.logout_noti_negative,
+							new DialogListener() {
+
+								@Override
+								public void setOnPositiveButtonClicked() {
+									dialog.dismiss();
+									session = Session.getInstance(activity);
+									session.logoutUser(MainActivity.class);
+									activity.finish();
+								}
+							});
 					break;
 				}
 			}

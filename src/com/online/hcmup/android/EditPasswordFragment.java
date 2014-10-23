@@ -94,7 +94,7 @@ public class EditPasswordFragment extends BaseFragment {
 				new ApiListener() {
 
 					@Override
-					public void onSuccess(Object json, boolean isArray) {
+					public void onSuccess(int i, Object json, boolean isArray) {
 						Utils.showToast(context,
 								R.string.edit_password_noti_success);
 						// edit in session or not???
@@ -104,7 +104,8 @@ public class EditPasswordFragment extends BaseFragment {
 					}
 
 					@Override
-					public void onFailure(int statusCode, String jsonString) {
+					public void onFailure(int i, int statusCode,
+							String jsonString) {
 						Utils.showError(context, statusCode);
 					}
 				}, String.format(Link.STUDENT_CHANGE_PASSWORD,

@@ -21,4 +21,5 @@ public class Constant {
 	public static String TAG_SCHEDULE = "SCHEDULE_FRAGMENT";
 	public static String TAG_SCHEDULE_EXAMINATE = "SCHEDULE_EXAMINATE_FRAGMENT";
 	public static String TAG_MARK = "MARK_FRAGMENT";
+	public static String TAG_STUDENT_FEE = "STUDENT_FEE_FRAGMENT";
 }

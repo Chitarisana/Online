@@ -35,7 +35,7 @@ public class ApiCall extends AsyncTask<URL, Integer, Long> {
 		// Cancel request if there is no network connection while loading
 		if (!ApiConnect.isConnectingToInternet(context)) {
 			cancel(true);
-			callback.onFailure(Errors.CONNECTION_ERROR, null);
+			callback.onFailure(-1, Errors.CONNECTION_ERROR, null);
 			return;
 		}
 		timestamp = System.currentTimeMillis();
@@ -117,7 +117,7 @@ public class ApiCall extends AsyncTask<URL, Integer, Long> {
 			dialog = null;
 		}
 		if (result <= 0) {
-			callback.onFailure(Errors.CONNECTION_ERROR, null);
+			callback.onFailure(-1, Errors.CONNECTION_ERROR, null);
 			// Utils.showConnectionError(context);
 			return;
 		}
@@ -128,7 +128,7 @@ public class ApiCall extends AsyncTask<URL, Integer, Long> {
 				JSONObject obj = new JSONObject(jsonString);
 				int stt = obj.getInt(Key.KEY_STATUS);
 				if (stt != 1) {
-					callback.onFailure(Errors.DATA_ERROR,
+					callback.onFailure(i, Errors.DATA_ERROR,
 							obj.getString(Key.KEY_ERRORS));
 					continue;
 				}
@@ -136,26 +136,26 @@ public class ApiCall extends AsyncTask<URL, Integer, Long> {
 				if ("".equals(obj.get(Key.KEY_ERRORS).toString())
 						&& !obj.has(Key.KEY_DATA)) {
 					Log.d("Check if array null", obj.toString());
-					callback.onSuccess(null, false);
+					callback.onSuccess(i, null, false);
 					continue;
 				}
 				try {
 					JSONArray datas = obj.getJSONArray(Key.KEY_DATA);
-					callback.onSuccess(datas, true);
+					callback.onSuccess(i, datas, true);
 				} catch (JSONException e) {
 					e.printStackTrace();
 					try {
 						JSONObject data = obj.getJSONObject(Key.KEY_DATA);
-						callback.onSuccess(data, false);
+						callback.onSuccess(i, data, false);
 					} catch (JSONException e1) {
 						e1.printStackTrace();
-						callback.onFailure(Errors.JSON_ERROR,
+						callback.onFailure(i, Errors.JSON_ERROR,
 								obj.getString(Key.KEY_DATA));
 					}
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
-				callback.onFailure(Errors.JSON_ERROR, results.toString());
+				callback.onFailure(i, Errors.JSON_ERROR, results.toString());
 			}
 		}
 	}

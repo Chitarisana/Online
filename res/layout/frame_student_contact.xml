@@ -17,7 +17,7 @@
             android:layout_height="wrap_content" />
 
         <LinearLayout
-            android:id="@+id/content1"
+            android:id="@+id/std_content1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content" />
 
         <LinearLayout
-            android:id="@+id/content2"
+            android:id="@+id/std_content2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" />

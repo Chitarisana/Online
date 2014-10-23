@@ -74,8 +74,9 @@ public class Utils {
 			for (int i = 0; i < keys.length; i++) {
 				if (js.has(keys[i])) {
 					values[i] = trimSpace(js.getString(keys[i]));
-					if (values[i].isEmpty())
+					if (values[i].isEmpty() || "".equals(values[i])) {
 						isNull = true;
+					}
 				}
 			}
 		} catch (JSONException e) {
@@ -83,6 +84,15 @@ public class Utils {
 			isNull = true;
 		}
 		return new JSONValue(values, isNull);
+	}
+
+	public static String[] getValues(JSONObject js, String[] keys,
+			boolean notNull) {
+		JSONValue jsv = getValues(js, keys);
+		if (jsv.isItemNull && notNull) {
+			return null;
+		}
+		return jsv.values;
 	}
 
 	public static String[] getValues(Object obj, Class<?> cls, String[] key) {

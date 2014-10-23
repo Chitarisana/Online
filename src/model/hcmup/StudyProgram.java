@@ -22,6 +22,9 @@ public class StudyProgram {
 	public String SemesterName;
 
 	public StudyProgram(String... values) {
+		if (values == null) {			
+			return;
+		}
 		strs = values;
 		CurriculumID = values[0];
 		CurriculumName = values[1];
@@ -30,13 +33,12 @@ public class StudyProgram {
 		SemesterName = values[4];
 		Credits = Double.parseDouble(values[5]);
 		StudyProgramID = values[6];
-		StudyProgramName = values[7];		
+		StudyProgramName = values[7];
 	}
 
 	public StudyProgram(String json) throws JSONException {
-		this(
-				Utils.getValues(new JSONObject(json),
-						Key.KEY_STUDY_PROGRAMS_INFO).values);		
+		this(Utils.getValues(new JSONObject(json), Key.KEY_STUDY_PROGRAMS_INFO,
+				true));		
 	}
 
 	public static List<StudyProgram> jsonArrayToList(String json)

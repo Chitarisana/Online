@@ -140,7 +140,7 @@ public class StudentFragment extends BaseFragment {
 		ApiConnect.callUrls(context, new ApiListener() {
 
 			@Override
-			public void onSuccess(Object json, boolean isArray) {
+			public void onSuccess(int position, Object json, boolean isArray) {
 
 				if (isArray) {
 					JSONArray datas = (JSONArray) json;
@@ -155,14 +155,14 @@ public class StudentFragment extends BaseFragment {
 							ApiConnect.callImageUrl(context, new ApiListener() {
 
 								@Override
-								public void onSuccess(Object json,
-										boolean isArray) {
+								public void onSuccess(int position,
+										Object json, boolean isArray) {
 									loadImage();
 								}
 
 								@Override
-								public void onFailure(int statusCode,
-										String jsonString) {
+								public void onFailure(int position,
+										int statusCode, String jsonString) {
 									Utils.showError(context, statusCode);
 								}
 							}, info.FileImage);
@@ -186,7 +186,8 @@ public class StudentFragment extends BaseFragment {
 			}
 
 			@Override
-			public void onFailure(int statusCode, String jsonString) {
+			public void onFailure(int position, int statusCode,
+					String jsonString) {
 				Utils.showError(context, statusCode);
 				loadDb();
 			}
@@ -297,16 +298,16 @@ public class StudentFragment extends BaseFragment {
 		loadImage();
 		switch (TYPE) {
 		case 0:
-			list = (ListView) rootView.findViewById(R.id.content);
+			list = (ListView) rootView.findViewById(R.id.std_content);
 			setTable(rootView, R.id.title, R.string.key_info_title);
 			break;
 		case 1:
-			list = (ListView) rootView.findViewById(R.id.content);
+			list = (ListView) rootView.findViewById(R.id.std_content);
 			setTable(rootView, R.id.title, R.string.key_course_title);
 			break;
 		case 2:
-			list1 = (LinearLayout) rootView.findViewById(R.id.content1);
-			list2 = (LinearLayout) rootView.findViewById(R.id.content2);
+			list1 = (LinearLayout) rootView.findViewById(R.id.std_content1);
+			list2 = (LinearLayout) rootView.findViewById(R.id.std_content2);
 			setTable(rootView, R.id.title, R.string.key_contact_1_title);
 			setTable(rootView, R.id.title2, R.string.key_contact_2_title);
 			break;

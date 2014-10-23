@@ -38,4 +38,11 @@ public class TermStudy {
 	public String getHeader() {
 		return TermName + " (" + (int) getCreditNum() + " tc)";
 	}
+
+	public ArrayList<String> getCurrisName() {
+		ArrayList<String> list = new ArrayList<String>();
+		for (int i = 0; i < StudyUnit.size(); i++)
+			list.add(StudyUnit.get(i).CurriculumName);
+		return list;
+	}
 }

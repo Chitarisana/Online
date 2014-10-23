@@ -27,7 +27,7 @@ public class ImageCall extends AsyncTask<URL, Void, Bitmap> {
 		// Cancel request if there is no network connection while loading
 		if (!ApiConnect.isConnectingToInternet(context)) {
 			cancel(true);
-			callback.onFailure(Errors.CONNECTION_ERROR, null);
+			callback.onFailure(-1, Errors.CONNECTION_ERROR, null);
 			return;
 		}
 		timestamp = System.currentTimeMillis();
@@ -44,10 +44,10 @@ public class ImageCall extends AsyncTask<URL, Void, Bitmap> {
 			mIcon = BitmapFactory.decodeStream(input);
 		} catch (MalformedURLException e1) {
 			Log.d("error URL", e1.getMessage());
-			callback.onFailure(Errors.DATA_ERROR, e1.getMessage());
+			callback.onFailure(0, Errors.DATA_ERROR, e1.getMessage());
 		} catch (IOException e1) {
 			Log.d("error IO", e1.getMessage());
-			callback.onFailure(Errors.DATA_ERROR, e1.getMessage());
+			callback.onFailure(0, Errors.DATA_ERROR, e1.getMessage());
 		}
 		return mIcon;
 	}
@@ -62,9 +62,9 @@ public class ImageCall extends AsyncTask<URL, Void, Bitmap> {
 
 		if (result != null) {
 			Utils.saveImageToIS(context, result);
-			callback.onSuccess(null, false);
+			callback.onSuccess(0, null, false);
 		} else {
-			callback.onFailure(Errors.DATA_ERROR, null);
+			callback.onFailure(0, Errors.DATA_ERROR, null);
 		}
 	}
 }

@@ -78,6 +78,8 @@ public class Key {
 	/* "Mã lớp học phần", */"Mã học phần", "Tên học phần", "Học kỳ", "Năm học",
 			"Trạng thái", "Đã chấp nhận", "Tín chỉ", "Thông tin chi tiết",
 			"Tên giảng viên", "Ngày bắt đầu", "Ngày kết thúc" };
+	public static final String[] KEY_REGISTER_VIEW = new String[] {
+			"Tên học phần", "Số tín chỉ", "Ngày học", "Giảng viên" };
 	public static final String[] KEY_NOT_ACCUMULATE_CURRICULUM = new String[] {
 			"CurriculumID", "CurriculumName", "CurriculumTypeName", "Credits" };
 	public static final String[] KEY_NOT_ACCUMULATE_CURRICULUM_VI = new String[] {

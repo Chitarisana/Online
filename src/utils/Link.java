@@ -2,7 +2,7 @@ package utils;
 
 public class Link {
 	// Test link
-	static final String BASE_URL = "http://monlinews.appspot.com/";
+	static final String BASE_URL = "http://10.0.0.199/mobilews/mservice/Service.svc/";
 	/*
 	 * public static final String PUBLIC_NEWS = BASE_URL + "publicnews"; public
 	 * static final String PRIVATE_NEWS = BASE_URL + "privatenews?studentID=%s";

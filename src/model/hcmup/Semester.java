@@ -1,6 +1,7 @@
 package model.hcmup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Semester {
 	public String SemesterID;
@@ -29,5 +30,13 @@ public class Semester {
 		String str = SemesterName;
 		str += " (" + CreditNum + " tc)";
 		return str;
+	}
+
+	public static List<String> toStrings(List<Semester> sems) {
+		List<String> list = new ArrayList<String>();
+		for (int i = 0; i < sems.size(); i++) {
+			list.add(sems.get(i).getHeader());
+		}
+		return list;
 	}
 }

@@ -1,15 +1,32 @@
 package com.online.hcmup.android;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.hcmup.Curriculum;
+import model.hcmup.DbHandler;
+import model.hcmup.RegisteredStudyUnit;
 import model.hcmup.TermStudy;
+import model.utils.CustomArrayAdapter;
 import model.utils.KeyValueAdapter;
 import model.utils.KeyValuePair;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import utils.ApiConnect;
+import utils.ApiListener;
 import utils.Constant;
+import utils.Errors;
+import utils.Key;
+import utils.Link;
 import utils.Session;
+import utils.Utils;
 import android.app.Fragment;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,8 +35,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -70,12 +87,17 @@ public class RegisterCurriculumFragment extends BaseFragment {
 
 	private void setHandlerButton(Fragment frag, String tag) {
 		context.getFragmentManager().beginTransaction()
-				.replace(R.id.content, frag, tag).addToBackStack(null).commit();
+				.replace(R.id.sub_content, frag, tag).addToBackStack(null)
+				.commit();
 	}
 
 	public static class ResultCurrentFragment extends BaseFragment {
-		public static TermStudy current;
-		static ListView list, details;
+		TermStudy current;
+		ListView list, detailsPort;
+		FrameLayout detailsLand;
+		static boolean isLand;
+		static int selected = 0;
+		DbHandler db;
 
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -90,10 +112,13 @@ public class RegisterCurriculumFragment extends BaseFragment {
 				// navigate to fragment view all
 				getFragmentManager()
 						.beginTransaction()
-						.replace(R.id.content, new AllResultFragment(),
+						.replace(R.id.sub_content, new AllResultFragment(),
 								Constant.TAG_REGISTER_CURRICULUM_RESULT_ALL)
 						.addToBackStack(null).commit();
 				return true;
+			case android.R.id.home:
+				// reset static variable
+				selected = 0;
 			default:
 				return super.onOptionsItemSelected(item);
 			}
@@ -104,77 +129,172 @@ public class RegisterCurriculumFragment extends BaseFragment {
 				Bundle savedInstanceState) {
 			setOnFragment(R.string.register_curriculum_result_current);
 
-			View row = inflater.inflate(R.layout.fragment_registered_current,
+			db = DbHandler.getInstance(context);
+			session = Session.getInstance(context);
+			session.checkLogin();
+
+			View view = inflater.inflate(R.layout.fragment_registered_current,
 					container, false);
+			TextView studentID = (TextView) view.findViewById(R.id.studentID);
+			TextView studentName = (TextView) view
+					.findViewById(R.id.studentName);
+			studentID.setText(session.getStudentID());
+			studentName.setText(session.getStudentName());
 
-			TextView stdName = (TextView) row.findViewById(R.id.studentName);
-			stdName.setText(session.getStudentName());
-			TextView stdID = (TextView) row.findViewById(R.id.studentID);
-			stdID.setText(session.getStudentID());
+			list = (ListView) view.findViewById(R.id.list_layout);
+			isLand = context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 
-			details = (ListView) row.findViewById(R.id.reg_details);
-			list = (ListView) row.findViewById(R.id.reg_content);
-
-			/*
-			 * DisplayMetrics displaymetrics = new DisplayMetrics();
-			 * context.getWindowManager().getDefaultDisplay()
-			 * .getMetrics(displaymetrics); LinearLayout.LayoutParams params =
-			 * new LinearLayout.LayoutParams( LayoutParams.MATCH_PARENT, (int)
-			 * (displaymetrics.heightPixels / 5));
-			 * 
-			 * list.setLayoutParams(params);
-			 */
-			ArrayAdapter<String> adt = new ArrayAdapter<String>(context,
-					R.layout.row_key_value, R.id.key, new String[] { "test 1",
-							"test 2", "test 3", "test 2", "test 3", "test 2",
-							"test 3" });
-			if (adt.getCount() > 5) {
-				RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-						LayoutParams.MATCH_PARENT, 160);
-				params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-				details.setLayoutParams(params);
+			if (isLand) {
+				detailsLand = (FrameLayout) view
+						.findViewById(R.id.details_layout);
+			} else {
+				detailsPort = (ListView) view.findViewById(R.id.reg_details);
 			}
-			details.setAdapter(adt);
 
-			// call api
-			return row;
+			// Call API
+			ApiConnect.callUrls(
+					context,
+					new ApiListener() {
+
+						@Override
+						public void onSuccess(int position, Object json,
+								boolean isArray) {
+
+							if (isArray) {
+								JSONArray datas = (JSONArray) json;
+								try {
+									if (position == 0) {
+										for (int i = 0; i < datas.length(); i++) {
+											JSONObject js = datas
+													.getJSONObject(i);
+											RegisteredStudyUnit reg = new RegisteredStudyUnit(
+													js.toString());
+											db.addRegisteredCurriculum(reg);
+										}
+									} else {
+										JSONObject js = datas.getJSONObject(0);
+										String year = js
+												.getString(Key.KEY_TERM_YEAR[0]);
+										String term = js
+												.getString(Key.KEY_TERM_YEAR[1]);
+										session.setCurrentTermYear(year, term);
+										loadContent();
+									}
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+
+						@Override
+						public void onFailure(int position, int statusCode,
+								String jsonString) {
+							Utils.showError(context, statusCode);
+							loadContent();
+						}
+					},
+					new String[] {
+							String.format(Link.REGISTER_SCHEDULE,
+									session.getStudentID()), Link.CURRENT_TERM });
+
+			return view;
 		}
 
-		/*public static void LoadFragment() {
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
-					R.layout.row_registered_current, R.id.curriName,
-					getCurrisName(current));
+		private void loadContent() {
+			HashMap<String, String> crrTermYear = session.getCurrentTermYear();
+			String termID = crrTermYear.get(Session.KEY_TERM_ID);
+			String year = crrTermYear.get(Session.KEY_YEAR_STUDY);
+			if (termID == null || year == null) {
+				Utils.showError(context, Errors.NULL_ERROR);
+				return;
+			}
+			ArrayList<RegisteredStudyUnit> regs = db
+					.getByTermYear(year, termID);
+			if (regs.size() == 0) {
+				Utils.showError(context, Errors.NULL_ERROR);
+				return;
+			}
+			current = new TermStudy(year, termID, regs);
+
+			CustomArrayAdapter<String> adapter = new CustomArrayAdapter<String>(
+					context, isLand ? R.layout.row_left_list
+							: R.layout.row_key_value, isLand ? R.id.tv_left
+							: R.id.key, current.getCurrisName(), R.color.main);
+
 			list.setAdapter(adapter);
 			list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 				@Override
 				public void onItemClick(AdapterView<?> adapterView, View v,
 						int position, long arg3) {
-					v.setSelected(true);
-					// get Details of that curriculum
-					ArrayList<KeyValuePair> data = new ArrayList<KeyValuePair>();
-					data.add(new KeyValuePair("Tên học phần", current.StudyUnit
-							.get(position).CurriculumName));
-					data.add(new KeyValuePair("Số tín chỉ", current.StudyUnit
-							.get(position).Credits + ""));
-					data.add(new KeyValuePair("Ngày học", current.StudyUnit
-							.get(position).Informations));
-					data.add(new KeyValuePair("Giảng viên", current.StudyUnit
-							.get(position).ProfessorName));
-					KeyValueAdapter adapter = new KeyValueAdapter(context,
-							data, R.layout.row_study_program_term_details, null);
-					details.setAdapter(adapter);
+					selected = list.getCheckedItemPosition();
+					setDetails(position);
 				}
 			});
+
+			list.setItemChecked(selected, true);
+			setDetails(selected);
 		}
 
-		protected static ArrayList<String> getCurrisName(TermStudy target) {
-			ArrayList<String> list = new ArrayList<String>();
-			for (int i = 0; i < target.StudyUnit.size(); i++)
-				list.add(target.StudyUnit.get(i).CurriculumName);
-			return list;
-		}*/
+		private void setDetails(int position) {
+			String[] keys = Key.KEY_REGISTER_VIEW;
+			RegisteredStudyUnit std = current.StudyUnit.get(position);
+			String[] values = new String[] { std.CurriculumName,
+					std.Credits + "", std.Informations, std.ProfessorName };
 
+			ArrayList<KeyValuePair> data = new ArrayList<KeyValuePair>();
+			for (int i = 0; i < keys.length; i++) {
+				data.add(new KeyValuePair(keys[i], values[i]));
+			}
+			KeyValueAdapter adapter = new KeyValueAdapter(context, data,
+					isLand ? R.layout.row_key_value_divider : 0, 0,
+					R.color.key_study_program, R.color.value_study_program,
+					R.color.divider_study_program, true);
+			if (isLand) {
+				View view = context.getLayoutInflater().inflate(
+						R.layout.fragment_study_program_term, null);
+
+				RelativeLayout header = (RelativeLayout) view
+						.findViewById(R.id.header);
+				header.setBackgroundColor(context.getResources().getColor(
+						R.color.registered));
+
+				TextView title = (TextView) view.findViewById(R.id.title);
+				title.setText(R.string.curriculum_id);
+				TextView credit = (TextView) view.findViewById(R.id.credit);
+				credit.setText(std.CurriculumID);
+
+				LinearLayout list = (LinearLayout) view
+						.findViewById(R.id.stdprg_content);
+
+				int adapterCount = adapter.getCount();
+				list.removeAllViews();
+				for (int i = 0; i < adapterCount; i++) {
+					View item = adapter.getView(i, null, null);
+					list.addView(item);
+				}
+				detailsLand.removeAllViews();
+				detailsLand.addView(view);
+			} else {
+				detailsPort.setAdapter(adapter);
+				// Setting height
+				int height = 0;
+				for (int i = 0; i < adapter.getCount(); i++) {
+					height += adapter.getMeasureHeight(i);
+				}
+				DisplayMetrics displaymetrics = new DisplayMetrics();
+				context.getWindowManager().getDefaultDisplay()
+						.getMetrics(displaymetrics);
+				int maxHeight = displaymetrics.heightPixels / 5;
+
+				if (height > maxHeight) {
+					RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+							LayoutParams.MATCH_PARENT, maxHeight);
+					params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+					detailsPort.setLayoutParams(params);
+				}
+			}
+		}
 	}
 
 	public static class AllResultFragment extends BaseFragment {

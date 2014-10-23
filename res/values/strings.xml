@@ -117,6 +117,9 @@
     <string name="renew_pass">Nhập lại mật khẩu mới</string>
     <string name="btn_confirm">Đồng ý</string>
     <string name="btn_cancel">Hủy bỏ</string>
+    <string name="logout_noti_title">Đăng xuất</string>
+    <string name="logout_noti_detail">Thoát khỏi tài khoản?</string>
+    <string name="logout_noti_negative">Quay lại</string>
     <string name="change_password_title">@string/edit_pass</string>
     <string name="edit_password_noti_null">Mật khẩu không được để trống.</string>
     <string name="edit_password_noti_wrong_old">Mật khẩu cũ không đúng.</string>
@@ -138,6 +141,7 @@
     <string name="register_curriculum_result_current">Các học phần hiện tại</string>
     <string name="register_curriculum_disaccumulate">Các học phần chưa tích lũy</string>
     <string name="register_curriculum_register">Đăng ký học phần</string>
+    <string name="curriculum_id">Mã học phần</string>
     <!-- <string name="title_activity_private">PrivateActivity</string> -->
 
 </resources>

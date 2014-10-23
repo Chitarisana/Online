@@ -37,6 +37,7 @@ public class PrivateActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.d("activity","on create");
 		setContentView(R.layout.activity_private);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -59,7 +60,7 @@ public class PrivateActivity extends BaseActivity {
 		iconArray.recycle();
 
 		menuLV.setAdapter(new MenuAdapter(this, sliderMenu, mainLayout, menuLV));
-		
+
 		menuToggle = new ActionBarDrawerToggle(this, mainLayout,
 				R.drawable.ic_menu, 0, 0) {
 			public void onDrawerClosed(View view) {
@@ -96,10 +97,12 @@ public class PrivateActivity extends BaseActivity {
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
+		Log.d("activity","on restore instace state");
 	}
 
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
+		Log.d("activity","on save instace state");
 	}
 
 	@Override

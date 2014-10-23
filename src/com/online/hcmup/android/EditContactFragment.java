@@ -163,14 +163,15 @@ public class EditContactFragment extends BaseFragment {
 			ApiConnect.callUrls(context, new ApiListener() {
 
 				@Override
-				public void onSuccess(Object json, boolean isArray) {
+				public void onSuccess(int position, Object json, boolean isArray) {
 					// Save contact to db
 					// call new url because the result of past url is not same
 					// the one in db
 					ApiConnect.callUrls(context, new ApiListener() {
 
 						@Override
-						public void onSuccess(Object json, boolean isArray) {
+						public void onSuccess(int position, Object json,
+								boolean isArray) {
 							if (isArray) {
 								JSONArray datas = (JSONArray) json;
 								try {
@@ -189,7 +190,8 @@ public class EditContactFragment extends BaseFragment {
 						}
 
 						@Override
-						public void onFailure(int statusCode, String jsonString) {
+						public void onFailure(int position, int statusCode,
+								String jsonString) {
 							Utils.showError(context, statusCode);
 							onBackPressed();
 						}
@@ -197,10 +199,12 @@ public class EditContactFragment extends BaseFragment {
 				}
 
 				@Override
-				public void onFailure(int statusCode, String jsonString) {
+				public void onFailure(int position, int statusCode,
+						String jsonString) {
 					Utils.showError(context, statusCode);
 					onBackPressed();
 				}
+
 			}, String.format(Link.STUDENT_EDIT_INFO,
 					(Object[]) values.toArray(new String[values.size()])));
 		} else {

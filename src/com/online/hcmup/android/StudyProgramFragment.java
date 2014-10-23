@@ -1,7 +1,6 @@
 package com.online.hcmup.android;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import model.hcmup.DbHandler;
 import model.hcmup.Semester;
@@ -68,7 +67,7 @@ public class StudyProgramFragment extends BaseFragment {
 		ApiConnect.callUrls(context, new ApiListener() {
 
 			@Override
-			public void onSuccess(Object json, boolean isArray) {
+			public void onSuccess(int position, Object json, boolean isArray) {
 
 				if (isArray) {
 					JSONArray datas = (JSONArray) json;
@@ -76,7 +75,8 @@ public class StudyProgramFragment extends BaseFragment {
 						for (int i = 0; i < datas.length(); i++) {
 							JSONObject js = datas.getJSONObject(i);
 							StudyProgram std = new StudyProgram(js.toString());
-							db.addStudyProgram(std);
+							if (std.toArray() != null)
+								db.addStudyProgram(std);
 						}
 
 					} catch (JSONException e) {
@@ -87,7 +87,8 @@ public class StudyProgramFragment extends BaseFragment {
 			}
 
 			@Override
-			public void onFailure(int statusCode, String jsonString) {
+			public void onFailure(int position, int statusCode,
+					String jsonString) {
 				Utils.showError(context, statusCode);
 				loadContent();
 			}
@@ -107,8 +108,8 @@ public class StudyProgramFragment extends BaseFragment {
 			}
 		} else {
 			ArrayAdapter<String> adt = new ArrayAdapter<String>(context,
-					R.layout.row_left_list, R.id.txt_left,
-					semesterListToStringList(semesters));
+					R.layout.row_left_list, R.id.tv_left,
+					Semester.toStrings(semesters));
 			listLayout.setAdapter(adt);
 			listLayout
 					.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -123,14 +124,6 @@ public class StudyProgramFragment extends BaseFragment {
 			listLayout.setItemChecked(0, true);
 			setAdapterView(adapter, 0);
 		}
-	}
-
-	private List<String> semesterListToStringList(List<Semester> sems) {
-		List<String> list = new ArrayList<String>();
-		for (int i = 0; i < sems.size(); i++) {
-			list.add(sems.get(i).getHeader());
-		}
-		return list;
 	}
 
 	private void setAdapterView(TermAdapter adapter, int position) {

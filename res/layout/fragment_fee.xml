@@ -1,0 +1,149 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:padding="@dimen/bounder_padding" >
+
+    <TextView
+        android:id="@+id/studentName"
+        style="@style/TextView.TextStyle.Bold.StudentName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nguyễn Thị Thúy Phụng" />
+
+    <TextView
+        android:id="@+id/studentID"
+        style="@style/TextView.TextStyle.Bold.StudentID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/studentName" />
+
+    <LinearLayout
+        android:id="@+id/spin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/studentID"
+        android:layout_marginTop="10sp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="10sp"
+            android:text="Năm học"
+            android:textColor="@color/white" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="2011-2012"
+            android:textColor="@color/white" />
+        <!--
+             <Spinner
+            android:id="@+id/year"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/header_study_program"
+            android:textColor="@color/white" />
+        -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="10sp"
+            android:text="Học kỳ"
+            android:textColor="@color/white" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="HK01"
+            android:textColor="@color/white" />
+        <!--
+             <Spinner
+            android:id="@+id/term"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/header_study_program"
+            android:textColor="@color/white" />-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom"
+        android:layout_below="@+id/spin"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:background="@color/divider_news"
+            android:padding="10sp"
+            android:text="Danh sách học phần"
+            android:textColor="@color/white" />
+
+        <ListView
+            android:id="@+id/fee_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/divider_news"
+            android:padding="10sp"
+            android:text="Chi tiết khoản phí"
+            android:textColor="@color/white" />
+
+        <ListView
+            android:id="@+id/port_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider_news"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp" android:textColor="@color/white"
+            android:text="Tổng nợ" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp" android:textColor="@color/white"
+            android:text="0" />  
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:textColor="@color/white"
+            android:padding="10sp"
+            android:text="Tổng trả" />
+        <TextView
+            android:layout_width="wrap_content" android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="0" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -2,6 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main"
+    android:clickable="true"
     android:padding="@dimen/s10" >
 
     <!-- Bottom Button -->

@@ -57,7 +57,7 @@ public class NewsListFragment extends BaseFragment {
 			ApiConnect.callUrls(getActivity(), new ApiListener() {
 
 				@Override
-				public void onSuccess(Object json, boolean isArray) {
+				public void onSuccess(int i, Object json, boolean isArray) {
 					// public news accept array, not object
 					if (isArray) {
 						JSONArray datas = (JSONArray) json;
@@ -72,7 +72,7 @@ public class NewsListFragment extends BaseFragment {
 				}
 
 				@Override
-				public void onFailure(int statusCode, String jsonString) {
+				public void onFailure(int i, int statusCode, String jsonString) {
 					Utils.showError(context, statusCode);
 				}
 			}, String.format(Link.PUBLIC_NEWS, 1, 0));
@@ -80,7 +80,7 @@ public class NewsListFragment extends BaseFragment {
 			ApiConnect.callUrls(getActivity(), new ApiListener() {
 
 				@Override
-				public void onSuccess(Object json, boolean isArray) {
+				public void onSuccess(int position, Object json, boolean isArray) {
 					// private news accept array, not object
 					if (isArray) {
 						JSONArray datas = (JSONArray) json;
@@ -100,7 +100,8 @@ public class NewsListFragment extends BaseFragment {
 				}
 
 				@Override
-				public void onFailure(int statusCode, String jsonString) {
+				public void onFailure(int position, int statusCode,
+						String jsonString) {
 					Utils.showError(context, statusCode);
 					setPrivateNewsAdapter();
 				}

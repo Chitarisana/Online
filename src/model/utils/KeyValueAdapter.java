@@ -75,7 +75,6 @@ public class KeyValueAdapter extends BaseAdapter {
 				: R.layout.row_key_value, null);
 
 		TextView key = (TextView) row.findViewById(R.id.key);
-
 		TextView value = (TextView) row.findViewById(R.id.value);
 		RelativeLayout rowLayout = (RelativeLayout) row
 				.findViewById(R.id.row_layout);
@@ -106,8 +105,9 @@ public class KeyValueAdapter extends BaseAdapter {
 					- 2
 					* context.getResources().getDimensionPixelSize(
 							R.dimen.bounder_padding);
-			if (percent != 0)
+			if (percent != 0) {
 				maxWidth = (int) (maxWidth * percent);
+			}
 		}
 
 		int padding = 0;
@@ -140,5 +140,15 @@ public class KeyValueAdapter extends BaseAdapter {
 					key.getPaddingBottom());
 		}
 		return row;
+	}
+
+	// Test
+	public int getMeasureHeight(int position) {
+		View row = getView(position, null, null);
+		TextView key = (TextView) row.findViewById(R.id.key);
+		TextView value = (TextView) row.findViewById(R.id.value);
+		key.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
+		value.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
+		return Math.max(key.getMeasuredHeight(), value.getMeasuredHeight());
 	}
 }
